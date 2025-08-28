@@ -8,7 +8,7 @@ use Slim\Factory\AppFactory;
 use App\Database\BaseDatos;
 use App\Modelos\Localidades;
 use App\Modelos\Usuarios;
-// use Tuupola\Middleware\HttpBasicAuthentication;
+use Tuupola\Middleware\HttpBasicAuthentication;
 
 $app = AppFactory::create();
 
@@ -19,12 +19,20 @@ $app->addErrorMiddleware(true, true, true);
 $db = new BaseDatos('localhost', 'proy_calco', 'root', '123456');
 $pdo = $db->getPdo();
 
-// $app->add(new HttpBasicAuthentication([
-//     "path" => "/calcomania",
-//     "users" => [
-//         "user" => "password"
-//     ]
-// ]));
+
+$app->add(new HttpBasicAuthentication([
+    "path" => "/api",
+    "users" => [
+        "user" => "password",
+        "Sebastian" => "Seba123", 
+    ],
+    "secure" => false 
+]));
+
+$app->get('/api/protected', function (Request $request, Response $response) {
+    $response->getBody()->write("Ruta protegida accesible");
+    return $response;
+});
 
 //LOCALIDAD
 
@@ -151,12 +159,14 @@ $app->post('/usuarios', function (Request $request, Response $response) use ($pd
         return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
     }
 
+     $hash = password_hash($datos['contrasena_hash'], PASSWORD_DEFAULT);
+
     $usuario = new Usuarios(
         $pdo,
         $datos['nombre_usuario'],
         $datos['apellido'],
         $datos['email'],
-        $datos['contrasena_hash'],
+        $hash,
         $datos['direccion'],
         $datos['telefono'],
         $datos['codigo_postal'],
@@ -169,7 +179,7 @@ $app->post('/usuarios', function (Request $request, Response $response) use ($pd
         $datos['nombre_usuario'],
         $datos['apellido'],
         $datos['email'],
-        $datos['contrasena_hash'],
+        $hash,
         $datos['direccion'],
         $datos['telefono'],
         $datos['codigo_postal'],
@@ -217,7 +227,8 @@ $app->put('/usuarios/{id_usuario}', function ($request, $response, $args) use ($
         $data['codigo_postal'] ?? '',
         $data['cuenta_verificada'] ?? 0,
         $data['fecha_registro'] ?? date('Y-m-d H:i:s'),
-        $data['codigo_postal'] ?? ''
+        $data['codigo_postal'] ?? '',
+        $data['id_rol'] ?? ''
     );
 
     $response->getBody()->write(json_encode(
