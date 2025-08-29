@@ -96,6 +96,10 @@ class ComposerStaticInitb57f387a7d37596db3f7acd1c950f637
         ),
     );
 
+    public static $fallbackDirsPsr4 = array (
+        0 => __DIR__ . '/..' . '/bryanjhv/slim-session/src',
+    );
+
     public static $classMap = array (
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
@@ -110,6 +114,7 @@ class ComposerStaticInitb57f387a7d37596db3f7acd1c950f637
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitb57f387a7d37596db3f7acd1c950f637::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitb57f387a7d37596db3f7acd1c950f637::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInitb57f387a7d37596db3f7acd1c950f637::$fallbackDirsPsr4;
             $loader->classMap = ComposerStaticInitb57f387a7d37596db3f7acd1c950f637::$classMap;
 
         }, null, ClassLoader::class);

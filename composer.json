@@ -2,7 +2,8 @@
     "require": {
         "slim/slim": "4.*",
         "slim/psr7": "^1.7",
-        "tuupola/slim-basic-auth": "^3.4"
+        "tuupola/slim-basic-auth": "^3.4",
+        "bryanjhv/slim-session": "^4.1"
     },
     "autoload": {
     	"psr-4": {

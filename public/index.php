@@ -19,20 +19,35 @@ $app->addErrorMiddleware(true, true, true);
 $db = new BaseDatos('localhost', 'proy_calco', 'root', '123456');
 $pdo = $db->getPdo();
 
+//AUTH BASICA
 
-$app->add(new HttpBasicAuthentication([
-    "path" => "/api",
-    "users" => [
-        "user" => "password",
-        "Sebastian" => "Seba123", 
-    ],
-    "secure" => false 
-]));
+$app->get('/api/protected', function ($request, $response) use ($pdo) {
+    $auth = $request->getHeaderLine('Authorization');
 
-$app->get('/api/protected', function (Request $request, Response $response) {
-    $response->getBody()->write("Ruta protegida accesible");
-    return $response;
+    //chequear header
+    if (!str_starts_with($auth, 'Basic ')) {
+        return $response->withStatus(401);
+    }
+    //decodificar base64
+    [$email, $password] = explode(':', base64_decode(substr($auth, 6)), 2);
+
+    $stmt = $pdo->prepare("SELECT id_rol, contrasena_hash FROM usuarios WHERE email = ?");
+    $stmt->execute([$email]);
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$usuario || !password_verify($password, $usuario['contrasena_hash'])) {
+        return $response->withStatus(401);
+    }
+
+    $response->getBody()->write(json_encode([
+        'usuario' => $email,
+        'rol'     => $usuario['id_rol'] == 1 ? 'admin' : 'usuario'
+    ]));
+
+    return $response->withHeader('Content-Type', 'application/json');
 });
+
+
 
 //LOCALIDAD
 
@@ -216,19 +231,43 @@ $app->put('/usuarios/{id_usuario}', function ($request, $response, $args) use ($
 
     $usuarios = new Usuarios($pdo);
 
+    //validar y asignar id_rol
+    $id_rol = $data['id_rol'] ?? null;
+    if ($id_rol === null) {
+        $response->getBody()->write(json_encode([
+            "error" => "id_rol es obligatorio"
+        ]));
+        return $response->withHeader('Content-Type', 'application/json')
+                        ->withStatus(400);
+    }
+
+    //verificar que id_rol exista 
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM rol WHERE id_rol = ?");
+    $stmt->execute([$id_rol]);
+    if ($stmt->fetchColumn() == 0) {
+        $response->getBody()->write(json_encode([
+            "error" => "id_rol no existe"
+        ]));
+        return $response->withHeader('Content-Type', 'application/json')
+                        ->withStatus(400);
+    }
+
+    //hashear contraseña
+    $contrasena = $data['contrasena_hash'] ?? null;
+    $contrasena_hash = $contrasena ? password_hash($contrasena, PASSWORD_DEFAULT) : null;
+
     $resultado = $usuarios->actualizarUsuario(
         $id_usuario,
-        $data['nombre_usuario'] ?? '',
-        $data['apellido'] ?? '',
-        $data['email'] ?? '',
-        $data['contrasena_hash'] ?? '',
-        $data['direccion'] ?? '',
-        $data['telefono'] ?? '',
-        $data['codigo_postal'] ?? '',
+        $data['nombre_usuario'] ?? null,
+        $data['apellido'] ?? null,
+        $data['email'] ?? null,
+        $contrasena_hash,
+        $data['direccion'] ?? null,
+        $data['telefono'] ?? null,
+        $data['codigo_postal'] ?? null,
         $data['cuenta_verificada'] ?? 0,
         $data['fecha_registro'] ?? date('Y-m-d H:i:s'),
-        $data['codigo_postal'] ?? '',
-        $data['id_rol'] ?? ''
+        $id_rol
     );
 
     $response->getBody()->write(json_encode(
@@ -240,6 +279,8 @@ $app->put('/usuarios/{id_usuario}', function ($request, $response, $args) use ($
     return $response->withHeader('Content-Type', 'application/json')
                     ->withStatus($resultado ? 200 : 400);
 });
+
+
 
 //DELETE
 $app->delete('/usuarios/{id_usuario}', function ($request, $response, $args) use ($pdo) {
