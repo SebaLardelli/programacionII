@@ -3,7 +3,9 @@
         "slim/slim": "4.*",
         "slim/psr7": "^1.7",
         "tuupola/slim-basic-auth": "^3.4",
-        "bryanjhv/slim-session": "^4.1"
+        "bryanjhv/slim-session": "^4.1",
+        "tuupola/slim-jwt-auth": "^3.8",
+        "firebase/php-jwt": "^5.5"
     },
     "autoload": {
     	"psr-4": {

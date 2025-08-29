@@ -9,6 +9,7 @@ use App\Database\BaseDatos;
 use App\Modelos\Localidades;
 use App\Modelos\Usuarios;
 use Tuupola\Middleware\HttpBasicAuthentication;
+use Firebase\JWT\JWT;
 
 $app = AppFactory::create();
 
@@ -18,6 +19,8 @@ $app->addErrorMiddleware(true, true, true);
 
 $db = new BaseDatos('localhost', 'proy_calco', 'root', '123456');
 $pdo = $db->getPdo();
+
+
 
 //AUTH BASICA
 
@@ -47,6 +50,49 @@ $app->get('/api/protected', function ($request, $response) use ($pdo) {
     return $response->withHeader('Content-Type', 'application/json');
 });
 
+//JWT
+$app->post('/login', function (Request $request, Response $response) {
+    $data = $request->getParsedBody();
+    $username = $data['username'] ?? '';
+    $password = $data['password'] ?? '';
+
+    if ($username === 'user' && $password === 'password') {
+        $key = "your_secret_key";
+        $payload = [
+            "iss" => "example.com",
+            "aud" => "example.com",
+            "iat" => time(),
+            "nbf" => time(),
+            "exp" => time() + 3600,
+            "data" => [
+                "username" => $username
+            ]
+        ];
+        $token = JWT::encode($payload, $key, 'HS256');
+        $response->getBody()->write(json_encode(["token" => $token]));
+    } else {
+        $response->getBody()->write("Credenciales inválidas");
+        return $response->withStatus(401);
+    }
+    return $response->withHeader('Content-Type', 'application/json');
+});
+
+// Middleware JWT
+$app->add(new JwtAuthentication([
+    "secret" => "your_secret_key",
+    "attribute" => "token",
+    "path" => "/api",
+    "ignore" => ["/login"],
+    "algorithm" => ["HS256"]
+]));
+
+// Ruta protegida
+$app->get('/api/protected', function (Request $request, Response $response) {
+    $token = $request->getAttribute('token');
+    $username = $token['data']['username'];
+    $response->getBody()->write("Hola, $username");
+    return $response;
+});
 
 
 //LOCALIDAD
