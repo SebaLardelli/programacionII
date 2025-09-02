@@ -5,6 +5,7 @@ namespace App\Modelos;
 use PDO;
 
 class Categorias {
+    
     private $pdo;
     private $id_categoria;
     private $nombre_c;

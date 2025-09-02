@@ -5,6 +5,7 @@ namespace App\Modelos;
 use PDO;
 
 class Usuarios {
+
     private $pdo;
     private $id_usuario;
     private $nombre_usuario;
@@ -28,9 +29,9 @@ class Usuarios {
         string $telefono = '',
         string $codigo_postal = '',
         bool $cuenta_verificada = false,
-        string $fecha_registro = null,
-        int $id_usuario = null,
-        int $id_rol = null
+        string $fecha_registro,
+        int $id_usuario,
+        int $id_rol
     ) {
         $this->pdo = $pdo;
         $this->nombre_usuario = $nombre_usuario;

@@ -45,7 +45,7 @@ class Localidades {
         $this->nombre_localidad = $nombre_localidad;
     }
 
-
+    // CRUD
     public function crear(): bool {
         $stmt = $this->pdo->prepare(
             "INSERT INTO localidades (codigo_postal, provincia, nombre_localidad) 
@@ -75,4 +75,5 @@ class Localidades {
         $stmt = $this->pdo->prepare("DELETE FROM localidades WHERE codigo_postal = :codigo_postal");
         return $stmt->execute([':codigo_postal' => $this->codigo_postal]);
     }
+
 }
