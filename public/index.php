@@ -4,12 +4,14 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+// use Psr\Http\Server\RequestHandlerInterface as Handler;
 use Slim\Factory\AppFactory;
 use App\Database\BaseDatos;
 use App\Modelos\Localidades;
 use App\Modelos\Usuarios;
 use Tuupola\Middleware\HttpBasicAuthentication;
 use Firebase\JWT\JWT;
+use Tuupola\Middleware\JwtAuthentication;
 
 $app = AppFactory::create();
 
@@ -24,7 +26,7 @@ $pdo = $db->getPdo();
 
 //AUTH BASICA
 
-$app->get('/api/protected', function ($request, $response) use ($pdo) {
+$app->get('/api/protected-basic', function ($request, $response) use ($pdo) {
     $auth = $request->getHeaderLine('Authorization');
 
     //chequear header
@@ -51,48 +53,73 @@ $app->get('/api/protected', function ($request, $response) use ($pdo) {
 });
 
 //JWT
-$app->post('/login', function (Request $request, Response $response) {
-    $data = $request->getParsedBody();
-    $username = $data['username'] ?? '';
-    $password = $data['password'] ?? '';
 
-    if ($username === 'user' && $password === 'password') {
-        $key = "your_secret_key";
-        $payload = [
-            "iss" => "example.com",
-            "aud" => "example.com",
-            "iat" => time(),
-            "nbf" => time(),
-            "exp" => time() + 3600,
-            "data" => [
-                "username" => $username
-            ]
-        ];
-        $token = JWT::encode($payload, $key, 'HS256');
-        $response->getBody()->write(json_encode(["token" => $token]));
-    } else {
-        $response->getBody()->write("Credenciales inválidas");
-        return $response->withStatus(401);
+$key = "your_secret_key";
+
+
+$app->post('/login', function (Request $request, Response $response) use ($pdo, $key) {
+    $authHeader = $request->getHeaderLine('Authorization');
+
+    if (!$authHeader || stripos($authHeader, 'Basic ') !== 0) {
+        $response->getBody()->write(json_encode(["error" => "Se requiere autenticación básica"]));
+        return $response->withHeader('Content-Type','application/json')->withStatus(401);
     }
-    return $response->withHeader('Content-Type', 'application/json');
+
+    $decoded = base64_decode(substr($authHeader, 6));
+    [$email, $password] = explode(':', $decoded, 2);
+
+    $stmt = $pdo->prepare("SELECT id_rol, contrasena_hash FROM usuarios WHERE email = ?");
+    $stmt->execute([$email]);
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$usuario || !password_verify($password, $usuario['contrasena_hash'])) {
+        $response->getBody()->write(json_encode(["error" => "Credenciales inválidas"]));
+        return $response->withHeader('Content-Type','application/json')->withStatus(401);
+    }
+
+    $now = time();
+    $payload = [
+        "iat" => $now,
+        "exp" => $now + 3600, 
+        "data" => [
+            "email"  => $email,
+            "id_rol" => (int)$usuario['id_rol']
+        ]
+    ];
+    $token = JWT::encode($payload, $key, 'HS256');
+
+    $response->getBody()->write(json_encode(["token" => $token]));
+    return $response->withHeader('Content-Type','application/json');
 });
 
 // Middleware JWT
 $app->add(new JwtAuthentication([
-    "secret" => "your_secret_key",
-    "attribute" => "token",
-    "path" => "/api",
-    "ignore" => ["/login"],
-    "algorithm" => ["HS256"]
+    "secret"     => $key,
+    "algorithm"  => ["HS256"],
+    "path"       => ["/api"],
+    "ignore"     => ["/login"],
+    "attribute"  => "token",
+    "secure"     => false, 
+    "error" => function (Response $response, array $args) {
+        $payload = ["error" => "Unauthorized", "message" => $args["message"] ?? "Token inválido"];
+        $response->getBody()->write(json_encode($payload));
+        return $response->withHeader("Content-Type","application/json")->withStatus(401);
+    }
 ]));
 
-// Ruta protegida
+
 $app->get('/api/protected', function (Request $request, Response $response) {
-    $token = $request->getAttribute('token');
-    $username = $token['data']['username'];
-    $response->getBody()->write("Hola, $username");
-    return $response;
+    $token = $request->getAttribute("token"); // viene decodificado
+    $email = $token['data']['email'];
+    $rol   = $token['data']['id_rol'] == 1 ? 'admin' : 'usuario';
+
+    $response->getBody()->write(json_encode([
+        "usuario" => $email,
+        "rol"     => $rol
+    ]));
+    return $response->withHeader('Content-Type','application/json');
 });
+
 
 
 //LOCALIDAD
