@@ -4,7 +4,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-// use Psr\Http\Server\RequestHandlerInterface as Handler;
+use Psr\Http\Server\RequestHandlerInterface as Handler;
 use Slim\Factory\AppFactory;
 use App\Database\BaseDatos;
 use App\Modelos\Localidades;
@@ -78,6 +78,7 @@ $app->post('/login', function (Request $request, Response $response) use ($pdo, 
     }
 
     $now = time();
+
     $payload = [
         "iat" => $now,
         "exp" => $now + 3600, 
@@ -119,6 +120,45 @@ $app->get('/api/protected', function (Request $request, Response $response) {
     ]));
     return $response->withHeader('Content-Type','application/json');
 });
+
+// Autorización
+
+class RoleMiddleware {
+    private array $allowedRoles;
+    public function __construct(array $allowedRoles) {
+        $this->allowedRoles = $allowedRoles;
+    }
+    public function __invoke($request, $handler) {
+        $token = $request->getAttribute("token");
+        $userRole = $token['data']['id_rol'] ?? null;
+        if (!$userRole || !in_array($userRole, $this->allowedRoles)) {
+            $response = new \Slim\Psr7\Response();
+            $response->getBody()->write(json_encode(['error' => 'Acceso denegado']));
+            return $response->withStatus(403)->withHeader('Content-Type', 'application/json');
+        }
+        return $handler->handle($request);
+    }
+}
+
+// Ruta accesible para admin (id_rol = 1)
+$app->get('/api/admin-only', function ($req, $res) {
+    $token = $req->getAttribute("token");
+    $res->getBody()->write(json_encode([
+        "msg" => "Bienvenido Admin",
+        "usuario" => $token['data']['email']
+    ]));
+    return $res->withHeader("Content-Type", "application/json");
+})->add(new RoleMiddleware([1]));
+
+// Ruta accesible por usuarios comunes (id_rol = 2)
+$app->get('/api/user-only', function ($req, $res) {
+    $token = $req->getAttribute("token");
+    $res->getBody()->write(json_encode([
+        "msg" => "Hola Usuario",
+        "usuario" => $token['data']['email']
+    ]));
+    return $res->withHeader("Content-Type", "application/json");
+})->add(new RoleMiddleware([2]));
 
 
 
