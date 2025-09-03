@@ -1,8 +1,5 @@
 <?php
-
 require __DIR__ . '/../vendor/autoload.php';
-require __DIR__ . '/../src/CRUD/CrudLocalidades.php';
-require __DIR__ . '/../src/CRUD/CrudUsuarios.php';
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -24,7 +21,15 @@ $app->addErrorMiddleware(true, true, true);
 $db = new BaseDatos('localhost', 'proy_calco', 'root', '123456');
 $pdo = $db->getPdo();
 
-
+require __DIR__ . '/../src/CRUD/CrudLocalidades.php';
+require __DIR__ . '/../src/CRUD/CrudUsuarios.php';
+require __DIR__ . '/../src/CRUD/CrudTematicas.php';
+require __DIR__ . '/../src/CRUD/CrudProductos.php';
+require __DIR__ . '/../src/CRUD/CrudMetodosPago.php';
+require __DIR__ . '/../src/CRUD/CrudPuntosRetiro.php';
+require __DIR__ . '/../src/CRUD/CrudCategorias.php';
+require __DIR__ . '/../src/CRUD/CrudVentas.php';
+require __DIR__ . '/../src/CRUD/CrudDetalleVentas.php';
 
 //AUTH BASICA
 
