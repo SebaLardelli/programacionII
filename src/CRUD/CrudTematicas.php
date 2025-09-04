@@ -5,7 +5,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use App\Modelos\Tematica;
 
 //PUT
-$app->post('/tematicas', function (Request $request, Response $response) use ($pdo) {
+$app->post('/CrearTematica', function (Request $request, Response $response) use ($pdo) {
     $datos = $request->getParsedBody();
 
     if (empty($datos['id_categoria']) || empty($datos['nombre_t']) || empty($datos['descripcion_t'])) {
@@ -26,10 +26,10 @@ $app->post('/tematicas', function (Request $request, Response $response) use ($p
     ]));
     return $response->withHeader('Content-Type', 'application/json')
                     ->withStatus($ok ? 201 : 500);
-});
+})->add(new RoleMiddleware([1]));
 
 //GET
-$app->get('/tematicas', function (Request $request, Response $response) use ($pdo) {
+$app->get('/TraerTematicas', function (Request $request, Response $response) use ($pdo) {
     $tematica = new Tematica($pdo);
     $resultado = $tematica->traerTematicas();
 
@@ -38,10 +38,10 @@ $app->get('/tematicas', function (Request $request, Response $response) use ($pd
         'datos' => $resultado
     ]));
     return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
-});
+})->add(new RoleMiddleware([1,2]));
 
 
-$app->get('/tematicas/{id_tematica}', function (Request $request, Response $response, $args) use ($pdo) {
+$app->get('/TraerTematica/{id_tematica}', function (Request $request, Response $response, $args) use ($pdo) {
     $id_tematica = $args['id_tematica'];
     $tematica = new Tematica($pdo);
     $resultado = $tematica->traerTematicaPorId($id_tematica);
@@ -58,10 +58,10 @@ $app->get('/tematicas/{id_tematica}', function (Request $request, Response $resp
         ]));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
     }
-});
+})->add(new RoleMiddleware([1,2]));
 
 //PUT
-$app->put('/tematicas/{id_tematica}', function (Request $request, Response $response, $args) use ($pdo) {
+$app->put('/ActualizarTematica/{id_tematica}', function (Request $request, Response $response, $args) use ($pdo) {
     $id_tematica = $args['id_tematica'];
     $datos = $request->getParsedBody();
 
@@ -85,10 +85,10 @@ $app->put('/tematicas/{id_tematica}', function (Request $request, Response $resp
     ]));
     return $response->withHeader('Content-Type', 'application/json')
                     ->withStatus($ok ? 200 : 500);
-});
+})->add(new RoleMiddleware([1]));
 
 //DELETE
-$app->delete('/tematicas/{id_tematica}', function (Request $request, Response $response, $args) use ($pdo) {
+$app->delete('/EliminarTematica/{id_tematica}', function (Request $request, Response $response, $args) use ($pdo) {
     $id_tematica = $args['id_tematica'];
     $tematica = new Tematica($pdo);
     $ok = $tematica->eliminarTematica($id_tematica);
@@ -99,6 +99,6 @@ $app->delete('/tematicas/{id_tematica}', function (Request $request, Response $r
     ]));
     return $response->withHeader('Content-Type', 'application/json')
                     ->withStatus($ok ? 200 : 500);
-});
+})->add(new RoleMiddleware([1]));
 
 ?>

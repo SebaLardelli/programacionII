@@ -5,7 +5,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use App\Modelos\Categorias;
 
 //POST
-$app->post('/Crearcategoria', function (Request $request, Response $response) use ($pdo) {
+$app->post('/CrearCategoria', function (Request $request, Response $response) use ($pdo) {
     $datos = $request->getParsedBody();
 
     if (empty($datos['nombre_c']) || empty($datos['descripcion_c'])) {
@@ -22,10 +22,10 @@ $app->post('/Crearcategoria', function (Request $request, Response $response) us
     ]));
     return $response->withHeader('Content-Type', 'application/json')
                     ->withStatus($ok ? 201 : 500);
-});
+})->add(new RoleMiddleware([1]));
 
 //GET
-$app->get('/categorias', function (Request $request, Response $response) use ($pdo) {
+$app->get('/TraerCategorias', function (Request $request, Response $response) use ($pdo) {
     $categoria = new Categorias($pdo);
     $resultado = $categoria->traerCategorias();
 
@@ -34,10 +34,10 @@ $app->get('/categorias', function (Request $request, Response $response) use ($p
         'datos' => $resultado
     ]));
     return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
-});
+})->add(new RoleMiddleware([1,2]));
 
 //PUT
-$app->put('/categorias/{id_categoria}', function (Request $request, Response $response, $args) use ($pdo) {
+$app->put('/ActualizarCategoria/{id_categoria}', function (Request $request, Response $response, $args) use ($pdo) {
     $id_categoria = (int)$args['id_categoria'];
     $datos = $request->getParsedBody();
 
@@ -53,13 +53,13 @@ $app->put('/categorias/{id_categoria}', function (Request $request, Response $re
         'mensaje' => $ok ? 'Categoría actualizada correctamente' : 'Error al actualizar la categoría',
         'id_categoria' => $id_categoria,
         'datos_recibidos' => $datos
-    ]));
+    ]))->add(new RoleMiddleware([1]));
     return $response->withHeader('Content-Type', 'application/json')
                     ->withStatus($ok ? 200 : 500);
 });
 
 //DELETE
-$app->delete('/categorias/{id_categoria}', function (Request $request, Response $response, $args) use ($pdo) {
+$app->delete('/EliminarCategoria/{id_categoria}', function (Request $request, Response $response, $args) use ($pdo) {
     $id_categoria = (int)$args['id_categoria'];
     $categoria = new Categorias($pdo);
     $ok = $categoria->eliminarCategoria($id_categoria);
@@ -70,6 +70,6 @@ $app->delete('/categorias/{id_categoria}', function (Request $request, Response 
     ]));
     return $response->withHeader('Content-Type', 'application/json')
                     ->withStatus($ok ? 200 : 500);
-});
+})->add(new RoleMiddleware([1]));
 
 ?>

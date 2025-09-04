@@ -5,7 +5,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use App\Modelos\PuntosRetiro;
 
 //POST
-$app->post('/puntosretiro', function (Request $request, Response $response) use ($pdo) {
+$app->post('/CrearPuntoretiro', function (Request $request, Response $response) use ($pdo) {
     $datos = $request->getParsedBody();
 
     if (empty($datos['direccion']) || empty($datos['horarios']) || empty($datos['codigo_postal'])) {
@@ -26,10 +26,10 @@ $app->post('/puntosretiro', function (Request $request, Response $response) use 
     ]));
     return $response->withHeader('Content-Type', 'application/json')
                     ->withStatus($ok ? 201 : 500);
-});
+})->add(new RoleMiddleware([1]));
 
 //GET
-$app->get('/puntosretiro', function (Request $request, Response $response) use ($pdo) {
+$app->get('/TraerPuntoRetiro', function (Request $request, Response $response) use ($pdo) {
     $punto = new PuntosRetiro($pdo);
     $resultado = $punto->traerPuntosRetiro();
 
@@ -38,9 +38,9 @@ $app->get('/puntosretiro', function (Request $request, Response $response) use (
         'datos' => $resultado
     ]));
     return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
-});
+})->add(new RoleMiddleware([1,2]));
 
-$app->get('/puntosretiro/{id_punto_retiro}', function (Request $request, Response $response, $args) use ($pdo) {
+$app->get('/TraerPuntoRetiro/{id_punto_retiro}', function (Request $request, Response $response, $args) use ($pdo) {
     $id_punto_retiro = (int)$args['id_punto_retiro'];
     $punto = new PuntosRetiro($pdo);
     $resultado = $punto->traerPuntoRetiroPorId($id_punto_retiro);
@@ -57,10 +57,10 @@ $app->get('/puntosretiro/{id_punto_retiro}', function (Request $request, Respons
         ]));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
     }
-});
+})->add(new RoleMiddleware([1,2]));
 
 //PUT
-$app->put('/puntosretiro/{id_punto_retiro}', function (Request $request, Response $response, $args) use ($pdo) {
+$app->put('/ActualilzarPuntoRetiro/{id_punto_retiro}', function (Request $request, Response $response, $args) use ($pdo) {
     $id_punto_retiro = (int)$args['id_punto_retiro'];
     $datos = $request->getParsedBody();
 
@@ -84,10 +84,10 @@ $app->put('/puntosretiro/{id_punto_retiro}', function (Request $request, Respons
     ]));
     return $response->withHeader('Content-Type', 'application/json')
                     ->withStatus($ok ? 200 : 500);
-});
+})->add(new RoleMiddleware([1]));
 
 //DELETE
-$app->delete('/puntosretiro/{id_punto_retiro}', function (Request $request, Response $response, $args) use ($pdo) {
+$app->delete('/EliminarPuntoRetiro/{id_punto_retiro}', function (Request $request, Response $response, $args) use ($pdo) {
     $id_punto_retiro = (int)$args['id_punto_retiro'];
     $punto = new PuntosRetiro($pdo);
     $ok = $punto->eliminarPuntoRetiro($id_punto_retiro);
@@ -98,6 +98,6 @@ $app->delete('/puntosretiro/{id_punto_retiro}', function (Request $request, Resp
     ]));
     return $response->withHeader('Content-Type', 'application/json')
                     ->withStatus($ok ? 200 : 500);
-});
+})->add(new RoleMiddleware([1]));
 
 ?>

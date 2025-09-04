@@ -89,7 +89,7 @@ $app->put('/Actualizarlocalidad/{codigo_postal}', function (Request $request, Re
     ]));
     return $response->withHeader('Content-Type', 'application/json')
                     ->withStatus($ok ? 200 : 500);
-})->add(new RoleMiddleware([1,2]));
+})->add(new RoleMiddleware([1]));
 
 //DELETE
 $app->delete('/Eliminarlocalidad/{codigo_postal}', function (Request $request, Response $response, $args) use ($pdo) {

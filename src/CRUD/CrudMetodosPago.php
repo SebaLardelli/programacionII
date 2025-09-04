@@ -4,7 +4,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use App\Modelos\MetodosPago;
 
 //POST
-$app->post('/metodospago', function (Request $request, Response $response) use ($pdo) {
+$app->post('/CrearMetodoPago', function (Request $request, Response $response) use ($pdo) {
     $datos = $request->getParsedBody();
 
     if (empty($datos['descripcion_mp'])) {
@@ -21,10 +21,10 @@ $app->post('/metodospago', function (Request $request, Response $response) use (
     ]));
     return $response->withHeader('Content-Type', 'application/json')
                     ->withStatus($ok ? 201 : 500);
-});
+})->add(new RoleMiddleware([1]));
 
 //GET
-$app->get('/metodospago', function (Request $request, Response $response) use ($pdo) {
+$app->get('/TraerMetodosPago', function (Request $request, Response $response) use ($pdo) {
     $metodo = new MetodosPago($pdo);
     $resultado = $metodo->traerMetodosPago();
 
@@ -33,10 +33,10 @@ $app->get('/metodospago', function (Request $request, Response $response) use ($
         'datos' => $resultado
     ]));
     return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
-});
+})->add(new RoleMiddleware([1,2]));
 
 
-$app->get('/metodospago/{id_metodo_pago}', function (Request $request, Response $response, $args) use ($pdo) {
+$app->get('/Traermetodopago/{id_metodo_pago}', function (Request $request, Response $response, $args) use ($pdo) {
     $id_metodo_pago = (int)$args['id_metodo_pago'];
     $metodo = new MetodosPago($pdo);
     $resultado = $metodo->traerMetodoPagoPorId($id_metodo_pago);
@@ -53,10 +53,10 @@ $app->get('/metodospago/{id_metodo_pago}', function (Request $request, Response 
         ]));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
     }
-});
+})->add(new RoleMiddleware([1,2]));
 
 //PUT
-$app->put('/metodospago/{id_metodo_pago}', function (Request $request, Response $response, $args) use ($pdo) {
+$app->put('/ActualizarMetodoPago/{id_metodo_pago}', function (Request $request, Response $response, $args) use ($pdo) {
     $id_metodo_pago = (int)$args['id_metodo_pago'];
     $datos = $request->getParsedBody();
 
@@ -75,10 +75,10 @@ $app->put('/metodospago/{id_metodo_pago}', function (Request $request, Response 
     ]));
     return $response->withHeader('Content-Type', 'application/json')
                     ->withStatus($ok ? 200 : 500);
-});
+})->add(new RoleMiddleware([1]));
 
 //DELETE
-$app->delete('/metodospago/{id_metodo_pago}', function (Request $request, Response $response, $args) use ($pdo) {
+$app->delete('/EliminarMetodoPago/{id_metodo_pago}', function (Request $request, Response $response, $args) use ($pdo) {
     $id_metodo_pago = (int)$args['id_metodo_pago'];
     $metodo = new MetodosPago($pdo);
     $ok = $metodo->eliminarMetodoPago($id_metodo_pago);
@@ -89,6 +89,6 @@ $app->delete('/metodospago/{id_metodo_pago}', function (Request $request, Respon
     ]));
     return $response->withHeader('Content-Type', 'application/json')
                     ->withStatus($ok ? 200 : 500);
-});
+})->add(new RoleMiddleware([1]));
 
 ?>

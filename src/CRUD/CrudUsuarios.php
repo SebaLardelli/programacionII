@@ -5,7 +5,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use App\Modelos\Usuarios;
 
 //POST  
-$app->post('/Crearusuario', function (Request $request, Response $response) use ($pdo) {
+$app->post('/CrearUsuario', function (Request $request, Response $response) use ($pdo) {
     $datos = $request->getParsedBody();
 
     $camposRequeridos = ['nombre_usuario', 'apellido', 'email', 'contrasena_hash', 'direccion', 'telefono', 'codigo_postal', 'fecha_registro', 'id_rol'];
@@ -61,7 +61,7 @@ $app->post('/Crearusuario', function (Request $request, Response $response) use 
 });
 
 //GET
-$app->get('/Traerusuarios', function (Request $request, Response $response) use ($pdo) {
+$app->get('/TraerUsuarios', function (Request $request, Response $response) use ($pdo) {
     $usuarios = new Usuarios($pdo);
     $resultado = $usuarios->traerUsuarios();
 
@@ -72,7 +72,7 @@ $app->get('/Traerusuarios', function (Request $request, Response $response) use 
     return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
 });
 
-$app->get('/TraerusuarioID/{id_usuario}', function (Request $request, Response $response, array $args) use ($pdo) {
+$app->get('/TraerUsuario/{id_usuario}', function (Request $request, Response $response, array $args) use ($pdo) {
     $id = (int)$args['id_usuario'];
 
     $modelo = new Usuarios($pdo);
@@ -89,7 +89,7 @@ $app->get('/TraerusuarioID/{id_usuario}', function (Request $request, Response $
 
 
 //PUT
-$app->put('/Actualizarusuario/{id_usuario}', function ($request, $response, $args) use ($pdo) {
+$app->put('/ActualizarUsuario/{id_usuario}', function ($request, $response, $args) use ($pdo) {
     $id_usuario = $args['id_usuario'];
     $data = $request->getParsedBody();
 
@@ -145,7 +145,7 @@ $app->put('/Actualizarusuario/{id_usuario}', function ($request, $response, $arg
 
 
 //DELETE
-$app->delete('/Eliminarusuario/{id_usuario}', function ($request, $response, $args) use ($pdo) {
+$app->delete('/EliminarUsuario/{id_usuario}', function ($request, $response, $args) use ($pdo) {
     $id_usuario = $args['id_usuario'];
 
     $usuarios = new Usuarios($pdo);

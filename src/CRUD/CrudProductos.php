@@ -5,7 +5,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use App\Modelos\Productos;
 
 //POST
-$app->post('/productos', function (Request $request, Response $response) use ($pdo) {
+$app->post('/CrearProducto', function (Request $request, Response $response) use ($pdo) {
     $datos = $request->getParsedBody();
 
     $campos = ['nombre_p', 'descripcion_p', 'precio', 'stock', 'id_estado_p', 'tamaño', 'id_categoria', 'imagen_url'];
@@ -34,10 +34,10 @@ $app->post('/productos', function (Request $request, Response $response) use ($p
     ]));
     return $response->withHeader('Content-Type', 'application/json')
                     ->withStatus($ok ? 201 : 500);
-});
+})->add(new RoleMiddleware([1]));
 
 //GET
-$app->get('/productos', function (Request $request, Response $response) use ($pdo) {
+$app->get('/TraerProductos', function (Request $request, Response $response) use ($pdo) {
     $producto = new Productos($pdo, 0);
     $resultado = $producto->traerProductos();
 
@@ -46,10 +46,10 @@ $app->get('/productos', function (Request $request, Response $response) use ($pd
         'datos' => $resultado
     ]));
     return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
-});
+})->add(new RoleMiddleware([1,2]));
 
 
-$app->get('/productos/{id_producto}', function (Request $request, Response $response, $args) use ($pdo) {
+$app->get('/TraerProducto/{id_producto}', function (Request $request, Response $response, $args) use ($pdo) {
     $id_producto = (int)$args['id_producto'];
     $producto = new Productos($pdo, $id_producto);
     $resultado = $producto->traerProductoPorId($id_producto);
@@ -66,10 +66,10 @@ $app->get('/productos/{id_producto}', function (Request $request, Response $resp
         ]));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
     }
-});
+})->add(new RoleMiddleware([1,2]));
 
 //PUT
-$app->put('/productos/{id_producto}', function (Request $request, Response $response, $args) use ($pdo) {
+$app->put('/ActualizarProducto/{id_producto}', function (Request $request, Response $response, $args) use ($pdo) {
     $id_producto = (int)$args['id_producto'];
     $datos = $request->getParsedBody();
 
@@ -101,10 +101,10 @@ $app->put('/productos/{id_producto}', function (Request $request, Response $resp
     ]));
     return $response->withHeader('Content-Type', 'application/json')
                     ->withStatus($ok ? 200 : 500);
-});
+})->add(new RoleMiddleware([1]));
 
 //DELETE
-$app->delete('/productos/{id_producto}', function (Request $request, Response $response, $args) use ($pdo) {
+$app->delete('/EliminarProducto/{id_producto}', function (Request $request, Response $response, $args) use ($pdo) {
     $id_producto = (int)$args['id_producto'];
     $producto = new Productos($pdo, $id_producto);
     $ok = $producto->eliminarProducto($id_producto);
@@ -115,6 +115,6 @@ $app->delete('/productos/{id_producto}', function (Request $request, Response $r
     ]));
     return $response->withHeader('Content-Type', 'application/json')
                     ->withStatus($ok ? 200 : 500);
-});
+})->add(new RoleMiddleware([1,2]));
 
 ?>

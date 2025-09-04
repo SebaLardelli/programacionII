@@ -5,7 +5,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use App\Modelos\DetalleVentas;
 
 //POST
-$app->post('/detalleventas', function (Request $request, Response $response) use ($pdo) {
+$app->post('/CrearDetalleVenta', function (Request $request, Response $response) use ($pdo) {
     $datos = $request->getParsedBody();
 
     $campos = ['id_venta', 'id_carrito', 'producto', 'cantidad', 'precio_unitario'];
@@ -31,10 +31,10 @@ $app->post('/detalleventas', function (Request $request, Response $response) use
     ]));
     return $response->withHeader('Content-Type', 'application/json')
                     ->withStatus($ok ? 201 : 500);
-});
+})->add(new RoleMiddleware([1,2]));
 
 //GET
-$app->get('/detalleventas', function (Request $request, Response $response) use ($pdo) {
+$app->get('/TraerDetalleVentas', function (Request $request, Response $response) use ($pdo) {
     $detalle = new DetalleVentas($pdo);
     $resultado = $detalle->traerDetallesVentas();
 
@@ -43,10 +43,10 @@ $app->get('/detalleventas', function (Request $request, Response $response) use 
         'datos' => $resultado
     ]));
     return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
-});
+})->add(new RoleMiddleware([1,2]));
 
 
-$app->get('/detalleventas/{id_fila}', function (Request $request, Response $response, $args) use ($pdo) {
+$app->get('/TraerDetalleVenta/{id_fila}', function (Request $request, Response $response, $args) use ($pdo) {
     $id_fila = (int)$args['id_fila'];
     $detalle = new DetalleVentas($pdo);
     $resultado = $detalle->traerDetalleVentaPorId($id_fila);
@@ -66,7 +66,7 @@ $app->get('/detalleventas/{id_fila}', function (Request $request, Response $resp
 });
 
 //PUT
-$app->put('/detalleventas/{id_fila}', function (Request $request, Response $response, $args) use ($pdo) {
+$app->put('/ActualizarDetalleVenta/{id_fila}', function (Request $request, Response $response, $args) use ($pdo) {
     $id_fila = (int)$args['id_fila'];
     $datos = $request->getParsedBody();
 
@@ -95,10 +95,10 @@ $app->put('/detalleventas/{id_fila}', function (Request $request, Response $resp
     ]));
     return $response->withHeader('Content-Type', 'application/json')
                     ->withStatus($ok ? 200 : 500);
-});
+})->add(new RoleMiddleware([1]));
 
 //DELETE
-$app->delete('/detalleventas/{id_fila}', function (Request $request, Response $response, $args) use ($pdo) {
+$app->delete('/EliinarDetalleVenta/{id_fila}', function (Request $request, Response $response, $args) use ($pdo) {
     $id_fila = (int)$args['id_fila'];
     $detalle = new DetalleVentas($pdo);
     $ok = $detalle->eliminarDetalleVenta($id_fila);
@@ -109,6 +109,6 @@ $app->delete('/detalleventas/{id_fila}', function (Request $request, Response $r
     ]));
     return $response->withHeader('Content-Type', 'application/json')
                     ->withStatus($ok ? 200 : 500);
-});
+})->add(new RoleMiddleware([1]));
 
 ?>
