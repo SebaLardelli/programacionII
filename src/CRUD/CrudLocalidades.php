@@ -5,7 +5,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use App\Modelos\Localidades;
 
 //POST
-$app->post('/localidad', function (Request $request, Response $response) use ($pdo) {
+$app->post('/Crearlocalidad', function (Request $request, Response $response) use ($pdo) {
     $datos = $request->getParsedBody();
 
 
@@ -33,7 +33,7 @@ $app->post('/localidad', function (Request $request, Response $response) use ($p
 
 
 //GET
-$app->get('/localidades', function (Request $request, Response $response) use ($pdo) {
+$app->get('/Traerlocalidades', function (Request $request, Response $response) use ($pdo) {
     $localidades = new Localidades($pdo);
     $resultado = $localidades->traerLocalidades();
 
@@ -42,9 +42,9 @@ $app->get('/localidades', function (Request $request, Response $response) use ($
         'datos' => $resultado
     ]));
     return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
-});
+})->add(new RoleMiddleware([1]));
 
-$app->get('/localidades/{codigo_postal}', function (Request $request, Response $response, $args) use ($pdo) {
+$app->get('/TraerlocalidadesCP/{codigo_postal}', function (Request $request, Response $response, $args) use ($pdo) {
     $codigo_postal = $args['codigo_postal'];
     $localidades = new Localidades($pdo);
     $resultado = $localidades->traerLocalidadPorCP($codigo_postal);
@@ -61,10 +61,10 @@ $app->get('/localidades/{codigo_postal}', function (Request $request, Response $
         ]));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
     }
-});
+})->add(new RoleMiddleware([1]));
 
 //PUT
-$app->put('/localidades/{codigo_postal}', function (Request $request, Response $response, $args) use ($pdo) {
+$app->put('/Actualizarlocalidad/{codigo_postal}', function (Request $request, Response $response, $args) use ($pdo) {
     $codigo_postal = $args['codigo_postal'];
     $datos = $request->getParsedBody();
 
@@ -89,10 +89,10 @@ $app->put('/localidades/{codigo_postal}', function (Request $request, Response $
     ]));
     return $response->withHeader('Content-Type', 'application/json')
                     ->withStatus($ok ? 200 : 500);
-});
+})->add(new RoleMiddleware([1,2]));
 
 //DELETE
-$app->delete('/localidades/{codigo_postal}', function (Request $request, Response $response, $args) use ($pdo) {
+$app->delete('/Eliminarlocalidad/{codigo_postal}', function (Request $request, Response $response, $args) use ($pdo) {
     $codigo_postal = $args['codigo_postal'];
     $localidad = new Localidades($pdo);
     $ok = $localidad->eliminarLocalidad($codigo_postal);
@@ -103,6 +103,6 @@ $app->delete('/localidades/{codigo_postal}', function (Request $request, Respons
     ]));
     return $response->withHeader('Content-Type', 'application/json')
                     ->withStatus($ok ? 200 : 500);
-});
+})->add(new RoleMiddleware([1]));
 
 ?>

@@ -101,25 +101,24 @@ $app->post('/login', function (Request $request, Response $response) use ($pdo, 
 });
 
 // Middleware JWT
-$app->add(new JwtAuthentication([
-    "secret"     => $key,
-    "algorithm"  => ["HS256"],
-    "path"       => ["/api"],
-    "ignore"     => ["/login"],
-    "attribute"  => "token",
-    "secure"     => false, 
-    "error" => function (Response $response, array $args) {
+$app->add(new Tuupola\Middleware\JwtAuthentication([
+    "secret"    => $key,
+    "algorithm" => ["HS256"],
+    "path"      => ["/"],          
+    "ignore"    => ["/login", "/Crearlocalidad", "/Crearusuarios"],    
+    "attribute" => "token",
+    "secure"    => false,
+    "error"     => function (Response $response, array $args) {
         $payload = ["error" => "Unauthorized", "message" => $args["message"] ?? "Token inválido"];
         $response->getBody()->write(json_encode($payload));
         return $response->withHeader("Content-Type","application/json")->withStatus(401);
     }
 ]));
 
-
 $app->get('/api/protected', function (Request $request, Response $response) {
-    $token = $request->getAttribute("token"); // viene decodificado
-    $email = $token['data']['email'];
-    $rol   = $token['data']['id_rol'] == 1 ? 'admin' : 'usuario';
+    $token = $request->getAttribute("token");
+    $email = $token->data->email;
+    $rol   = $token->data->id_rol == 1 ? 'admin' : 'usuario';
 
     $response->getBody()->write(json_encode([
         "usuario" => $email,
@@ -137,36 +136,37 @@ class RoleMiddleware {
     }
     public function __invoke($request, $handler) {
         $token = $request->getAttribute("token");
-        $userRole = $token['data']['id_rol'] ?? null;
-        if (!$userRole || !in_array($userRole, $this->allowedRoles)) {
+
+        // Soportar token como objeto (stdClass) o como array
+        $userRole = null;
+        if (is_object($token) && isset($token->data)) {
+            $userRole = isset($token->data->id_rol) ? (int)$token->data->id_rol : null;
+        } elseif (is_array($token)) {
+            $data = $token['data'] ?? null;
+            if (is_array($data)) {
+                $userRole = isset($data['id_rol']) ? (int)$data['id_rol'] : null;
+            } elseif (is_object($data)) {
+                $userRole = isset($data->id_rol) ? (int)$data->id_rol : null;
+            }
+        }
+
+        // Si no hay token o no trae id_rol, corresponde 401 (no autenticado)
+        if ($userRole === null) {
+            $response = new \Slim\Psr7\Response();
+            $response->getBody()->write(json_encode(['error' => 'Unauthorized']));
+            return $response->withStatus(401)->withHeader('Content-Type', 'application/json');
+        }
+
+        // Autorización por rol
+        if (!in_array($userRole, $this->allowedRoles, true)) {
             $response = new \Slim\Psr7\Response();
             $response->getBody()->write(json_encode(['error' => 'Acceso denegado']));
             return $response->withStatus(403)->withHeader('Content-Type', 'application/json');
         }
+
         return $handler->handle($request);
     }
 }
-
-// Ruta accesible para admin (id_rol = 1)
-$app->get('/api/admin-only', function ($req, $res) {
-    $token = $req->getAttribute("token");
-    $res->getBody()->write(json_encode([
-        "msg" => "Bienvenido Admin",
-        "usuario" => $token['data']['email']
-    ]));
-    return $res->withHeader("Content-Type", "application/json");
-})->add(new RoleMiddleware([1]));
-
-// Ruta accesible por usuarios comunes (id_rol = 2)
-$app->get('/api/user-only', function ($req, $res) {
-    $token = $req->getAttribute("token");
-    $res->getBody()->write(json_encode([
-        "msg" => "Hola Usuario",
-        "usuario" => $token['data']['email']
-    ]));
-    return $res->withHeader("Content-Type", "application/json");
-})->add(new RoleMiddleware([2]));
-
 
 $app->run();
 

@@ -19,20 +19,20 @@ class Usuarios {
     private $fecha_registro;
     private $id_rol;
     
-    public function __construct(
-        PDO $pdo,
-        string $nombre_usuario = '',
-        string $apellido = '',
-        string $email = '',
-        string $contrasena_hash = '',
-        string $direccion = '',
-        string $telefono = '',
-        string $codigo_postal = '',
-        bool $cuenta_verificada = false,
-        string $fecha_registro,
-        int $id_usuario,
-        int $id_rol
-    ) {
+  public function __construct(
+    PDO $pdo,
+    string $nombre_usuario = '',
+    string $apellido = '',
+    string $email = '',
+    string $contrasena_hash = '',
+    string $direccion = '',
+    string $telefono = '',
+    string $codigo_postal = '',
+    bool $cuenta_verificada = false,
+    string $fecha_registro = '',
+    int $id_usuario = 0,
+    int $id_rol = 0
+) {
         $this->pdo = $pdo;
         $this->nombre_usuario = $nombre_usuario;
         $this->apellido = $apellido;
@@ -212,6 +212,29 @@ class Usuarios {
         $stmt = $this->pdo->query("SELECT * FROM usuarios");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function traerUsuarioPorId(int $id_usuario): ?array {
+        $sql = "SELECT 
+                    id_usuario,
+                    nombre_usuario,
+                    apellido,
+                    email,
+                    telefono,
+                    direccion,
+                    codigo_postal,
+                    cuenta_verificada,
+                    fecha_registro,
+                    id_rol
+                FROM usuarios
+                WHERE id_usuario = :id_usuario";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':id_usuario' => $id_usuario]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row ?: null;
+    }
+
 }
+
+
 
 ?>

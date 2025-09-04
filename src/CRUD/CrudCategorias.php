@@ -5,7 +5,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use App\Modelos\Categorias;
 
 //POST
-$app->post('/categorias', function (Request $request, Response $response) use ($pdo) {
+$app->post('/Crearcategoria', function (Request $request, Response $response) use ($pdo) {
     $datos = $request->getParsedBody();
 
     if (empty($datos['nombre_c']) || empty($datos['descripcion_c'])) {
