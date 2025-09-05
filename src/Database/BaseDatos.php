@@ -7,7 +7,7 @@ class BaseDatos {
     
     private $pdo;
 
-    public function __construct($host, $dbname, $user, $password) {
+    public function __construct($host, $dbname, $user, $pass) {
         try {
             $this->pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $password);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

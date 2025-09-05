@@ -12,6 +12,7 @@ use App\Modelos\Usuarios;
 use Tuupola\Middleware\HttpBasicAuthentication;
 use Firebase\JWT\JWT;
 use Tuupola\Middleware\JwtAuthentication;
+use Dotenv\Dotenv;
 
 $app = AppFactory::create();
 
@@ -19,7 +20,20 @@ $app->addBodyParsingMiddleware();
 
 $app->addErrorMiddleware(true, true, true);
 
-$db = new BaseDatos('localhost', 'proy_calco', 'root', '123456');
+//Variables Entorno
+
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+$dotenv->required(['DB_HOST', 'DB_NAME', 'DB_USER', 'DB_PASS']);
+
+$host = $_ENV['DB_HOST'];
+$dbname = $_ENV['DB_NAME'];
+$user = $_ENV['DB_USER'];
+$password = $_ENV['DB_PASS'];
+
+
+$db = new BaseDatos($host, $dbname, $user, $password);
 $pdo = $db->getPdo();
 
 require __DIR__ . '/../src/CRUD/CrudLocalidades.php';
