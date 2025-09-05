@@ -11,7 +11,7 @@ class DetalleVentas {
     private $id_venta;
     private $id_carrito;
     private $precio_unitario;
-    private $importe_total;
+    private $importe_total_detalle; 
     private $id_producto;
     private $cantidad;
 
@@ -21,7 +21,7 @@ class DetalleVentas {
         int $id_venta ,
         int $id_carrito,
         float $precio_unitario = 0.0,
-        float $importe_total = 0.0,
+        float $importe_total_detalle = 0.0, 
         int $id_producto ,
         int $cantidad = 0
     ) {
@@ -30,7 +30,7 @@ class DetalleVentas {
         $this->id_venta = $id_venta;
         $this->id_carrito = $id_carrito;
         $this->precio_unitario = $precio_unitario;
-        $this->importe_total = $importe_total;
+        $this->importe_total_detalle = $importe_total_detalle;
         $this->id_producto = $id_producto;
         $this->cantidad = $cantidad;
     }
@@ -52,8 +52,8 @@ class DetalleVentas {
         return $this->precio_unitario;
     }
 
-    public function getImporteTotal(): float {
-        return $this->importe_total;
+    public function getImporteTotalDetalle(): float {
+        return $this->importe_total_detalle;
     }
 
     public function getIdProducto(): int {
@@ -77,8 +77,8 @@ class DetalleVentas {
         $this->precio_unitario = $precio_unitario;
     }
 
-    public function setImporteTotal(float $importe_total): void {
-        $this->importe_total = $importe_total;
+    public function setImporteTotalDetalle(float $importe_total_detalle): void { // cambiado
+        $this->importe_total_detalle = $importe_total_detalle;
     }
 
     public function setIdProducto(int $id_producto): void {
@@ -93,21 +93,21 @@ class DetalleVentas {
         int $id_venta,
         int $id_carrito,
         float $precio_unitario,
-        float $importe_total,
+        float $importe_total_detalle,
         int $id_producto,
         int $cantidad
     ): bool {
         $stmt = $this->pdo->prepare("
             INSERT INTO detalle_venta
-            (id_venta, id_carrito, precio_unitario, importe_total, id_producto, cantidad)
-            VALUES (:id_venta, :id_carrito, :precio_unitario, :importe_total, :id_producto, :cantidad)
+            (id_venta, id_carrito, precio_unitario, importe_total_detalle, id_producto, cantidad)
+            VALUES (:id_venta, :id_carrito, :precio_unitario, :importe_total_detalle, :id_producto, :cantidad)
         ");
 
         return $stmt->execute([
             ':id_venta' => $id_venta,
             ':id_carrito' => $id_carrito,
             ':precio_unitario' => $precio_unitario,
-            ':importe_total' => $importe_total,
+            ':importe_total_detalle' => $importe_total_detalle,
             ':id_producto' => $id_producto,
             ':cantidad' => $cantidad
         ]);
@@ -118,7 +118,7 @@ class DetalleVentas {
         int $id_venta,
         int $id_carrito,
         float $precio_unitario,
-        float $importe_total,
+        float $importe_total_detalle, 
         int $id_producto,
         int $cantidad
     ): bool {
@@ -127,7 +127,7 @@ class DetalleVentas {
             SET id_venta = :id_venta,
                 id_carrito = :id_carrito,
                 precio_unitario = :precio_unitario,
-                importe_total = :importe_total,
+                importe_total_detalle = :importe_total_detalle,
                 id_producto = :id_producto,
                 cantidad = :cantidad
             WHERE id_fila = :id_fila
@@ -138,7 +138,7 @@ class DetalleVentas {
             ':id_venta' => $id_venta,
             ':id_carrito' => $id_carrito,
             ':precio_unitario' => $precio_unitario,
-            ':importe_total' => $importe_total,
+            ':importe_total_detalle' => $importe_total_detalle, 
             ':id_producto' => $id_producto,
             ':cantidad' => $cantidad
         ]);

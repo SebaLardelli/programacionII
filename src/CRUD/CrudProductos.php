@@ -8,7 +8,7 @@ use App\Modelos\Productos;
 $app->post('/CrearProducto', function (Request $request, Response $response) use ($pdo) {
     $datos = $request->getParsedBody();
 
-    $campos = ['nombre_p', 'descripcion_p', 'precio', 'stock', 'id_estado_p', 'tamaño', 'id_categoria', 'imagen_url'];
+    $campos = ['nombre_p', 'descripcion_p', 'precio', 'stock', 'id_estado_p', 'tamanio', 'id_categoria', 'imagen_url'];
     foreach ($campos as $campo) {
         if (empty($datos[$campo]) && $datos[$campo] !== "0") {
             $response->getBody()->write(json_encode(['error' => "El campo $campo es requerido"]));
@@ -23,7 +23,7 @@ $app->post('/CrearProducto', function (Request $request, Response $response) use
         (float)$datos['precio'],
         (int)$datos['stock'],
         (int)$datos['id_estado_p'],
-        $datos['tamaño'],
+        $datos['tamanio'],
         (int)$datos['id_categoria'],
         $datos['imagen_url']
     );
@@ -73,7 +73,7 @@ $app->put('/ActualizarProducto/{id_producto}', function (Request $request, Respo
     $id_producto = (int)$args['id_producto'];
     $datos = $request->getParsedBody();
 
-    $campos = ['nombre_p', 'descripcion_p', 'precio', 'stock', 'id_estado_p', 'tamaño', 'id_categoria', 'imagen_url'];
+    $campos = ['nombre_p', 'descripcion_p', 'precio', 'stock', 'id_estado_p', 'tamanio', 'id_categoria', 'imagen_url'];
     foreach ($campos as $campo) {
         if (!isset($datos[$campo])) {
             $response->getBody()->write(json_encode(['error' => "El campo $campo es requerido"]));
@@ -89,7 +89,7 @@ $app->put('/ActualizarProducto/{id_producto}', function (Request $request, Respo
         (float)$datos['precio'],
         (int)$datos['stock'],
         (int)$datos['id_estado_p'],
-        $datos['tamaño'],
+        $datos['tamanio'],
         (int)$datos['id_categoria'],
         $datos['imagen_url']
     );

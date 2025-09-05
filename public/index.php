@@ -31,6 +31,7 @@ require __DIR__ . '/../src/CRUD/CrudPuntosRetiro.php';
 require __DIR__ . '/../src/CRUD/CrudCategorias.php';
 require __DIR__ . '/../src/CRUD/CrudVentas.php';
 require __DIR__ . '/../src/CRUD/CrudDetalleVentas.php';
+require __DIR__ . '/../src/CRUD/CrudCarrito.php';
 
 //AUTH BASICA
 

@@ -179,6 +179,13 @@ class Ventas {
         $stmt = $this->pdo->query("SELECT * FROM ventas");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function traerVentaPorId(int $id_venta): ?array {
+        $stmt = $this->pdo->prepare("SELECT * FROM ventas WHERE id_venta = :id_venta");
+        $stmt->execute([':id_venta' => $id_venta]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row ?: null;
+    }
 }
 
 ?>

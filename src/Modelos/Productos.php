@@ -13,20 +13,20 @@ class Productos {
     private $precio;
     private $stock;
     private $id_estado_p;
-    private $tamaño;
+    private $tamanio;        
     private $id_categoria;
     private $imagen_url;
 
     public function __construct(
         PDO $pdo,
-        int $id_producto,
+        int $id_producto = 0,
         string $nombre_p = '',
         string $descripcion_p = '',
         float $precio = 0.0,
         int $stock = 0,
-        int $id_estado_p,
-        string $tamaño = '',
-        int $id_categoria,
+        int $id_estado_p = 0,
+        string $tamanio = '',
+        int $id_categoria = 0,
         string $imagen_url = ''
     ) {
         $this->pdo = $pdo;
@@ -36,11 +36,10 @@ class Productos {
         $this->precio = $precio;
         $this->stock = $stock;
         $this->id_estado_p = $id_estado_p;
-        $this->tamaño = $tamaño;
+        $this->tamanio = $tamanio;
         $this->id_categoria = $id_categoria;
         $this->imagen_url = $imagen_url;
     }
-
     // Getters
     public function getIdProducto(): int {
         return $this->id_producto;
@@ -67,7 +66,7 @@ class Productos {
     }
 
     public function getTamaño(): string {
-        return $this->tamaño;
+        return $this->tamanio;
     }
 
     public function getIdCategoria(): ?int {
@@ -99,8 +98,8 @@ class Productos {
         $this->id_estado_p = $id_estado_p;
     }
 
-    public function setTamaño(string $tamaño): void {
-        $this->tamaño = $tamaño;
+    public function setTamaño(string $tamanio): void {
+        $this->tamanio = $tamanio;
     }
 
     public function setIdCategoria(int $id_categoria): void {
@@ -111,30 +110,30 @@ class Productos {
         $this->imagen_url = $imagen_url;
     }
 
-    public function crearProducto(
+  public function crearProducto(
         string $nombre_p,
         string $descripcion_p,
         float $precio,
         int $stock,
         int $id_estado_p,
-        string $tamaño,
+        string $tamanio,
         int $id_categoria,
         string $imagen_url
     ): bool {
         $stmt = $this->pdo->prepare("
-            INSERT INTO producto (nombre_p, descripcion_p, precio, stock, id_estado_p, tamaño, id_categoria, imagen_url)
-            VALUES (:nombre_p, :descripcion_p, :precio, :stock, :id_estado_p, :tamaño, :id_categoria, :imagen_url)
+            INSERT INTO producto (nombre_p, descripcion_p, precio, stock, id_estado_p, tamanio, id_categoria, imagen_url)
+            VALUES (:nombre_p, :descripcion_p, :precio, :stock, :id_estado_p, :tamanio, :id_categoria, :imagen_url)
         ");
 
         return $stmt->execute([
-            ':nombre_p' => $nombre_p,
-            ':descripcion_p' => $descripcion_p,
-            ':precio' => $precio,
-            ':stock' => $stock,
-            ':id_estado_p' => $id_estado_p,
-            ':tamaño' => $tamaño,
+            ':nombre_p'     => $nombre_p,
+            ':descripcion_p'=> $descripcion_p,
+            ':precio'       => $precio,
+            ':stock'        => $stock,
+            ':id_estado_p'  => $id_estado_p,
+            ':tamanio'      => $tamanio,
             ':id_categoria' => $id_categoria,
-            ':imagen_url' => $imagen_url
+            ':imagen_url'   => $imagen_url
         ]);
     }
 
@@ -145,27 +144,33 @@ class Productos {
         float $precio,
         int $stock,
         int $id_estado_p,
-        string $tamaño,
+        string $tamanio,
         int $id_categoria,
         string $imagen_url
     ): bool {
         $stmt = $this->pdo->prepare("
             UPDATE producto 
-            SET nombre_p = :nombre_p, descripcion_p = :descripcion_p, precio = :precio, stock = :stock,
-                id_estado_p = :id_estado_p, tamaño = :tamaño, id_categoria = :id_categoria, imagen_url = :imagen_url
+            SET nombre_p = :nombre_p,
+                descripcion_p = :descripcion_p,
+                precio = :precio,
+                stock = :stock,
+                id_estado_p = :id_estado_p,
+                tamanio = :tamanio,
+                id_categoria = :id_categoria,
+                imagen_url = :imagen_url
             WHERE id_producto = :id_producto
         ");
 
         return $stmt->execute([
-            ':id_producto' => $id_producto,
-            ':nombre_p' => $nombre_p,
-            ':descripcion_p' => $descripcion_p,
-            ':precio' => $precio,
-            ':stock' => $stock,
-            ':id_estado_p' => $id_estado_p,
-            ':tamaño' => $tamaño,
+            ':id_producto'  => $id_producto,
+            ':nombre_p'     => $nombre_p,
+            ':descripcion_p'=> $descripcion_p,
+            ':precio'       => $precio,
+            ':stock'        => $stock,
+            ':id_estado_p'  => $id_estado_p,
+            ':tamanio'      => $tamanio,
             ':id_categoria' => $id_categoria,
-            ':imagen_url' => $imagen_url
+            ':imagen_url'   => $imagen_url
         ]);
     }
 
@@ -186,5 +191,4 @@ class Productos {
         return $resultado ?: null;
     }
 }
-
 ?>

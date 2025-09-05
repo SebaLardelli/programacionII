@@ -5,7 +5,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use App\Modelos\PuntosRetiro;
 
 //POST
-$app->post('/CrearPuntoretiro', function (Request $request, Response $response) use ($pdo) {
+$app->post('/CrearPuntoRetiro', function (Request $request, Response $response) use ($pdo) {
     $datos = $request->getParsedBody();
 
     if (empty($datos['direccion']) || empty($datos['horarios']) || empty($datos['codigo_postal'])) {
@@ -60,7 +60,7 @@ $app->get('/TraerPuntoRetiro/{id_punto_retiro}', function (Request $request, Res
 })->add(new RoleMiddleware([1,2]));
 
 //PUT
-$app->put('/ActualilzarPuntoRetiro/{id_punto_retiro}', function (Request $request, Response $response, $args) use ($pdo) {
+$app->put('/ActualizarPuntoRetiro/{id_punto_retiro}', function (Request $request, Response $response, $args) use ($pdo) {
     $id_punto_retiro = (int)$args['id_punto_retiro'];
     $datos = $request->getParsedBody();
 

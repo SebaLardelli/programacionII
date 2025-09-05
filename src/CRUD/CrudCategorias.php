@@ -46,17 +46,17 @@ $app->put('/ActualizarCategoria/{id_categoria}', function (Request $request, Res
         return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
     }
 
-    $categoria = new Categorias($pdo);
+    $categoria = new \App\Modelos\Categorias($pdo);
     $ok = $categoria->actualizarCategoria($id_categoria, $datos['nombre_c'], $datos['descripcion_c']);
 
     $response->getBody()->write(json_encode([
         'mensaje' => $ok ? 'Categoría actualizada correctamente' : 'Error al actualizar la categoría',
         'id_categoria' => $id_categoria,
         'datos_recibidos' => $datos
-    ]))->add(new RoleMiddleware([1]));
+    ]));
     return $response->withHeader('Content-Type', 'application/json')
                     ->withStatus($ok ? 200 : 500);
-});
+})->add(new RoleMiddleware([1])); 
 
 //DELETE
 $app->delete('/EliminarCategoria/{id_categoria}', function (Request $request, Response $response, $args) use ($pdo) {

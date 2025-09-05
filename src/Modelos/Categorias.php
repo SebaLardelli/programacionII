@@ -15,7 +15,7 @@ class Categorias {
         PDO $pdo,
         string $nombre_c = '',
         string $descripcion_c = '',
-        int $id_categoria 
+        ?int $id_categoria = null
     ) {
         $this->pdo = $pdo;
         $this->nombre_c = $nombre_c;
@@ -24,7 +24,7 @@ class Categorias {
     }
 
     // Getters
-    public function getIdCategoria(): int {
+    public function getIdCategoria(): ?int {
         return $this->id_categoria;
     }
 
@@ -45,9 +45,10 @@ class Categorias {
         $this->descripcion_c = $descripcion_c;
     }
 
+
     public function crearCategoria(string $nombre_c, string $descripcion_c): bool {
         $stmt = $this->pdo->prepare("
-            INSERT INTO categoria (nombre_c, decripcion_c) 
+            INSERT INTO categoria (nombre_c, descripcion_c) 
             VALUES (:nombre_c, :descripcion_c)
         ");
         return $stmt->execute([
@@ -59,7 +60,7 @@ class Categorias {
     public function actualizarCategoria(int $id_categoria, string $nombre_c, string $descripcion_c): bool {
         $stmt = $this->pdo->prepare("
             UPDATE categoria 
-            SET nombre_c = :nombre_c, decripcion_c = :descripcion_c
+            SET nombre_c = :nombre_c, descripcion_c = :descripcion_c
             WHERE id_categoria = :id_categoria
         ");
         return $stmt->execute([
@@ -79,5 +80,4 @@ class Categorias {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
-
 ?>

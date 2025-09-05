@@ -51,6 +51,8 @@ $app->get('/TraerVentas', function (Request $request, Response $response) use ($
     return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
 })->add(new RoleMiddleware([1,2]));
 
+
+
 $app->get('/TraerVenta/{id_venta}', function (Request $request, Response $response, $args) use ($pdo) {
     $id_venta = (int)$args['id_venta'];
     $venta = new Ventas($pdo);
@@ -109,7 +111,7 @@ $app->put('/ActualizarVenta/{id_venta}', function (Request $request, Response $r
 })->add(new RoleMiddleware([1]));
 
 //DELETE
-$app->delete('/venta/{id_venta}', function (Request $request, Response $response, $args) use ($pdo) {
+$app->delete('/EliminarVenta/{id_venta}', function (Request $request, Response $response, $args) use ($pdo) {
     $id_venta = (int)$args['id_venta'];
     $venta = new Ventas($pdo);
     $ok = $venta->eliminarVenta($id_venta);
