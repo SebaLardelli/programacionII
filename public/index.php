@@ -13,6 +13,8 @@ use Tuupola\Middleware\HttpBasicAuthentication;
 use Firebase\JWT\JWT;
 use Tuupola\Middleware\JwtAuthentication;
 use Dotenv\Dotenv;
+use Firebase\JWT\Key;
+
 
 $app = AppFactory::create();
 
@@ -22,11 +24,12 @@ $app->addErrorMiddleware(true, true, true);
 
 //Variables Entorno
 
-$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
+$dotenv->required(['DB_HOST', 'DB_NAME', 'DB_USER', 'DB_PASS', 'JWT_SECRET', 'APP_URL']);
 
-$dotenv->required(['DB_HOST', 'DB_NAME', 'DB_USER', 'DB_PASS']);
 
+$appUrl = $_ENV['APP_URL'];
 $host = $_ENV['DB_HOST'];
 $dbname = $_ENV['DB_NAME'];
 $user = $_ENV['DB_USER'];
@@ -69,7 +72,8 @@ $app->get('/api/protected-basic', function ($request, $response) use ($pdo) {
 
     $response->getBody()->write(json_encode([
         'usuario' => $email,
-        'rol'     => $usuario['id_rol'] == 1 ? 'admin' : 'usuario'
+        'rol'     => $usuario['id_rol'] == 1 ? 'admin' : 'usuario',
+        'login_url' => $appUrl . "/login"
     ]));
 
     return $response->withHeader('Content-Type', 'application/json');
@@ -77,8 +81,7 @@ $app->get('/api/protected-basic', function ($request, $response) use ($pdo) {
 
 //JWT
 
-$key = "your_secret_key";
-
+$key = $_ENV['JWT_SECRET'];
 
 $app->post('/login', function (Request $request, Response $response) use ($pdo, $key) {
     $authHeader = $request->getHeaderLine('Authorization');
