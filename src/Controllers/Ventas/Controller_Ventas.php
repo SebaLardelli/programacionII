@@ -9,7 +9,7 @@ $app->post('/CrearVenta', function (Request $request, Response $response) use ($
     $datos = $request->getParsedBody();
 
     $campos = [
-        'id_usuario', 'id_carrito', 'fecha_venta', 'id_metodo_pago',
+        'id_usuario', 'id_carrito', 'fecha_venta',
         'importe_total', 'id_estado_v', 'id_punto_retiro', 'id_estado_p'
     ];
     foreach ($campos as $campo) {
@@ -24,7 +24,6 @@ $app->post('/CrearVenta', function (Request $request, Response $response) use ($
         (int)$datos['id_usuario'],
         (int)$datos['id_carrito'],
         $datos['fecha_venta'],
-        (int)$datos['id_metodo_pago'],
         (float)$datos['importe_total'],
         (int)$datos['id_estado_v'],
         (int)$datos['id_punto_retiro'],
@@ -78,7 +77,7 @@ $app->put('/ActualizarVenta/{id_venta}', function (Request $request, Response $r
     $datos = $request->getParsedBody();
 
     $campos = [
-        'id_usuario', 'id_carrito', 'fecha_venta', 'id_metodo_pago',
+        'id_usuario', 'id_carrito', 'fecha_venta',
         'importe_total', 'id_estado_v', 'id_punto_retiro', 'id_estado_p'
     ];
     foreach ($campos as $campo) {
@@ -94,7 +93,6 @@ $app->put('/ActualizarVenta/{id_venta}', function (Request $request, Response $r
         (int)$datos['id_usuario'],
         (int)$datos['id_carrito'],
         $datos['fecha_venta'],
-        (int)$datos['id_metodo_pago'],
         (float)$datos['importe_total'],
         (int)$datos['id_estado_v'],
         (int)$datos['id_punto_retiro'],

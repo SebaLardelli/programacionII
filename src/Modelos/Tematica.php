@@ -58,17 +58,15 @@ class Tematica {
 
 
     public function crearTematica(
-        int $id_categoria,
         string $nombre_t,
         string $descripcion_t
     ): bool {
         $stmt = $this->pdo->prepare("
-            INSERT INTO tematica (id_categoria, nombre_t, descripcion_t)
-            VALUES (:id_categoria, :nombre_t, :descripcion_t)
+            INSERT INTO tematica (nombre_t, descripcion_t)
+            VALUES (:nombre_t, :descripcion_t)
         ");
 
         return $stmt->execute([
-            ':id_categoria' => $id_categoria,
             ':nombre_t' => $nombre_t,
             ':descripcion_t' => $descripcion_t
         ]);
@@ -76,27 +74,27 @@ class Tematica {
 
     public function actualizarTematica(
         int $id_tematica,
-        int $id_categoria,
         string $nombre_t,
         string $descripcion_t
     ): bool {
         $stmt = $this->pdo->prepare("
             UPDATE tematica 
-            SET id_categoria = :id_categoria, nombre_t = :nombre_t, descripcion_t = :descripcion_t
+            SET nombre_t = :nombre_t, descripcion_t = :descripcion_t
             WHERE id_tematica = :id_tematica
         ");
 
-        return $stmt->execute([
+        $stmt->execute([
             ':id_tematica' => $id_tematica,
-            ':id_categoria' => $id_categoria,
             ':nombre_t' => $nombre_t,
             ':descripcion_t' => $descripcion_t
         ]);
+
     }
 
     public function eliminarTematica(int $id_tematica): bool {
         $stmt = $this->pdo->prepare("DELETE FROM tematica WHERE id_tematica = :id_tematica");
-        return $stmt->execute([':id_tematica' => $id_tematica]);
+        $stmt->execute([':id_tematica' => $id_tematica]);
+
     }
 
     public function traerTematicas(): array {

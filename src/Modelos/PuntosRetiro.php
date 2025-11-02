@@ -8,6 +8,7 @@ class PuntosRetiro {
     
     private $pdo;
     private $id_punto_retiro;
+    private $nombre_punto;
     private $direccion;
     private $horarios;
     private $codigo_postal;
@@ -15,12 +16,14 @@ class PuntosRetiro {
     public function __construct(
         PDO $pdo,
         int $id_punto_retiro = null,
+        string $nombre_punto = '',
         string $direccion = '',
         string $horarios = '',
         string $codigo_postal = ''
     ) {
         $this->pdo = $pdo;
         $this->id_punto_retiro = $id_punto_retiro;
+        $this->nombre_punto = $nombre_punto;
         $this->direccion = $direccion;
         $this->horarios = $horarios;
         $this->codigo_postal = $codigo_postal;
@@ -29,6 +32,10 @@ class PuntosRetiro {
     // Getters
     public function getIdPuntoRetiro(): ?int {
         return $this->id_punto_retiro;
+    }
+
+    public function getNombrePunto(): string {
+        return $this->nombre_punto;
     }
 
     public function getDireccion(): string {
@@ -44,6 +51,10 @@ class PuntosRetiro {
     }
 
     // Setters
+    public function setNombrePunto(string $nombre_punto): void {
+        $this->nombre_punto = $nombre_punto;
+    }
+
     public function setDireccion(string $direccion): void {
         $this->direccion = $direccion;
     }
@@ -58,16 +69,18 @@ class PuntosRetiro {
 
 
     public function crearPuntoRetiro(
+        string $nombre_punto,
         string $direccion,
         string $horarios,
         string $codigo_postal
     ): bool {
         $stmt = $this->pdo->prepare("
-            INSERT INTO punto_retiro (direccion, horarios, codigo_postal)
-            VALUES (:direccion, :horarios, :codigo_postal)
+            INSERT INTO punto_retiro (nombre_punto, direccion, horarios, codigo_postal)
+            VALUES (:nombre_punto, :direccion, :horarios, :codigo_postal)
         ");
 
         return $stmt->execute([
+            ':nombre_punto' => $nombre_punto,
             ':direccion' => $direccion,
             ':horarios' => $horarios,
             ':codigo_postal' => $codigo_postal
@@ -76,18 +89,20 @@ class PuntosRetiro {
 
     public function actualizarPuntoRetiro(
         int $id_punto_retiro,
+        string $nombre_punto,
         string $direccion,
         string $horarios,
         string $codigo_postal
     ): bool {
         $stmt = $this->pdo->prepare("
             UPDATE punto_retiro 
-            SET direccion = :direccion, horarios = :horarios, codigo_postal = :codigo_postal
+            SET nombre_punto = :nombre_punto, direccion = :direccion, horarios = :horarios, codigo_postal = :codigo_postal
             WHERE id_punto_retiro = :id_punto_retiro
         ");
 
         return $stmt->execute([
             ':id_punto_retiro' => $id_punto_retiro,
+            ':nombre_punto' => $nombre_punto,
             ':direccion' => $direccion,
             ':horarios' => $horarios,
             ':codigo_postal' => $codigo_postal

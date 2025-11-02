@@ -8,13 +8,14 @@ use App\Modelos\PuntosRetiro;
 $app->post('/CrearPuntoRetiro', function (Request $request, Response $response) use ($pdo) {
     $datos = $request->getParsedBody();
 
-    if (empty($datos['direccion']) || empty($datos['horarios']) || empty($datos['codigo_postal'])) {
+    if (empty($datos['nombre_punto']) || empty($datos['direccion']) || empty($datos['horarios']) || empty($datos['codigo_postal'])) {
         $response->getBody()->write(json_encode(['error' => 'Todos los campos son requeridos']));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
     }
 
     $punto = new PuntosRetiro($pdo);
     $ok = $punto->crearPuntoRetiro(
+        $datos['nombre_punto'],
         $datos['direccion'],
         $datos['horarios'],
         $datos['codigo_postal']
@@ -64,7 +65,7 @@ $app->put('/ActualizarPuntoRetiro/{id_punto_retiro}', function (Request $request
     $id_punto_retiro = (int)$args['id_punto_retiro'];
     $datos = $request->getParsedBody();
 
-    if (empty($datos['direccion']) || empty($datos['horarios']) || empty($datos['codigo_postal'])) {
+    if (empty($datos['nombre_punto']) || empty($datos['direccion']) || empty($datos['horarios']) || empty($datos['codigo_postal'])) {
         $response->getBody()->write(json_encode(['error' => 'Todos los campos son requeridos']));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
     }
@@ -72,6 +73,7 @@ $app->put('/ActualizarPuntoRetiro/{id_punto_retiro}', function (Request $request
     $punto = new PuntosRetiro($pdo);
     $ok = $punto->actualizarPuntoRetiro(
         $id_punto_retiro,
+        $datos['nombre_punto'],
         $datos['direccion'],
         $datos['horarios'],
         $datos['codigo_postal']

@@ -39,16 +39,58 @@ $password = $_ENV['DB_PASS'];
 $db = new BaseDatos($host, $dbname, $user, $password);
 $pdo = $db->getPdo();
 
-require __DIR__ . '/../src/CRUD/CrudLocalidades.php';
-require __DIR__ . '/../src/CRUD/CrudUsuarios.php';
-require __DIR__ . '/../src/CRUD/CrudTematicas.php';
-require __DIR__ . '/../src/CRUD/CrudProductos.php';
-require __DIR__ . '/../src/CRUD/CrudMetodosPago.php';
-require __DIR__ . '/../src/CRUD/CrudPuntosRetiro.php';
-require __DIR__ . '/../src/CRUD/CrudCategorias.php';
-require __DIR__ . '/../src/CRUD/CrudVentas.php';
-require __DIR__ . '/../src/CRUD/CrudDetalleVentas.php';
-require __DIR__ . '/../src/CRUD/CrudCarrito.php';
+// JWT Secret
+$key = $_ENV['JWT_SECRET'];
+
+// Autorización
+class RoleMiddleware {
+    private array $allowedRoles;
+    public function __construct(array $allowedRoles) {
+        $this->allowedRoles = $allowedRoles;
+    }
+    public function __invoke($request, $handler) {
+        $token = $request->getAttribute("token");
+
+        $userRole = null;
+        if (is_object($token) && isset($token->data)) {
+            $userRole = isset($token->data->id_rol) ? (int)$token->data->id_rol : null;
+        } elseif (is_array($token)) {
+            $data = $token['data'] ?? null;
+            if (is_array($data)) {
+                $userRole = isset($data['id_rol']) ? (int)$data['id_rol'] : null;
+            } elseif (is_object($data)) {
+                $userRole = isset($data->id_rol) ? (int)$data->id_rol : null;
+            }
+        }
+
+        if ($userRole === null) {
+            $response = new \Slim\Psr7\Response();
+            $response->getBody()->write(json_encode(['error' => 'Unauthorized']));
+            return $response->withStatus(401)->withHeader('Content-Type', 'application/json');
+        }
+
+        if (!in_array($userRole, $this->allowedRoles, true)) {
+            $response = new \Slim\Psr7\Response();
+            $response->getBody()->write(json_encode(['error' => 'Acceso denegado']));
+            return $response->withStatus(403)->withHeader('Content-Type', 'application/json');
+        }
+
+        return $handler->handle($request);
+    }
+}
+
+// Controladores
+require __DIR__ . '/../src/Controllers/Login/Controller_Login.php';
+require __DIR__ . '/../src/Controllers/Usuarios/Controller_Usuarios.php';
+require __DIR__ . '/../src/Controllers/Categoria/Controller_Categoria.php';
+require __DIR__ . '/../src/Controllers/Productos/Controller_Productos.php';
+require __DIR__ . '/../src/Controllers/Localidades/Controller_Localidad.php';
+require __DIR__ . '/../src/Controllers/Tematica/Controller_Tematica.php';
+require __DIR__ . '/../src/Controllers/PuntoRetiro/Controller_Punto_Retiro.php';
+require __DIR__ . '/../src/Controllers/Metodo_Pago/Controller_Metodo_Pago.php';
+require __DIR__ . '/../src/Controllers/Carrito/Controller_Carrito.php';
+require __DIR__ . '/../src/Controllers/Ventas/Controller_Ventas.php';
+require __DIR__ . '/../src/Controllers/DetalleVenta/Controller_Detalle_Venta.php';
 
 //AUTH BASICA
 
@@ -79,52 +121,12 @@ $app->get('/api/protected-basic', function ($request, $response) use ($pdo) {
     return $response->withHeader('Content-Type', 'application/json');
 });
 
-//JWT
-
-$key = $_ENV['JWT_SECRET'];
-
-$app->post('/login', function (Request $request, Response $response) use ($pdo, $key) {
-    $authHeader = $request->getHeaderLine('Authorization');
-
-    if (!$authHeader || stripos($authHeader, 'Basic ') !== 0) {
-        $response->getBody()->write(json_encode(["error" => "Se requiere autenticación básica"]));
-        return $response->withHeader('Content-Type','application/json')->withStatus(401);
-    }
-
-    $decoded = base64_decode(substr($authHeader, 6));
-    [$email, $password] = explode(':', $decoded, 2);
-
-    $stmt = $pdo->prepare("SELECT id_rol, contrasena_hash FROM usuarios WHERE email = ?");
-    $stmt->execute([$email]);
-    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$usuario || !password_verify($password, $usuario['contrasena_hash'])) {
-        $response->getBody()->write(json_encode(["error" => "Credenciales inválidas"]));
-        return $response->withHeader('Content-Type','application/json')->withStatus(401);
-    }
-
-    $now = time();
-
-    $payload = [
-        "iat" => $now,
-        "exp" => $now + 3600, 
-        "data" => [
-            "email"  => $email,
-            "id_rol" => (int)$usuario['id_rol']
-        ]
-    ];
-    $token = JWT::encode($payload, $key, 'HS256');
-
-    $response->getBody()->write(json_encode(["token" => $token]));
-    return $response->withHeader('Content-Type','application/json');
-});
-
-// Middleware JWT
+// Middleware JWT - Debe ir DESPUÉS de registrar todas las rutas
 $app->add(new Tuupola\Middleware\JwtAuthentication([
     "secret"    => $key,
     "algorithm" => ["HS256"],
     "path"      => ["/"],          
-    "ignore"    => ["/login", "/Crearlocalidad", "/Crearusuarios"],    
+    "ignore"    => ["/login", "/Crearlocalidad", "/CrearUsuario", "/Crearusuario"],    
     "attribute" => "token",
     "secure"    => false,
     "error"     => function (Response $response, array $args) {
@@ -145,47 +147,6 @@ $app->get('/api/protected', function (Request $request, Response $response) {
     ]));
     return $response->withHeader('Content-Type','application/json');
 });
-
-// Autorización
-
-class RoleMiddleware {
-    private array $allowedRoles;
-    public function __construct(array $allowedRoles) {
-        $this->allowedRoles = $allowedRoles;
-    }
-    public function __invoke($request, $handler) {
-        $token = $request->getAttribute("token");
-
-        // Soportar token como objeto (stdClass) o como array
-        $userRole = null;
-        if (is_object($token) && isset($token->data)) {
-            $userRole = isset($token->data->id_rol) ? (int)$token->data->id_rol : null;
-        } elseif (is_array($token)) {
-            $data = $token['data'] ?? null;
-            if (is_array($data)) {
-                $userRole = isset($data['id_rol']) ? (int)$data['id_rol'] : null;
-            } elseif (is_object($data)) {
-                $userRole = isset($data->id_rol) ? (int)$data->id_rol : null;
-            }
-        }
-
-        // Si no hay token o no trae id_rol, corresponde 401 (no autenticado)
-        if ($userRole === null) {
-            $response = new \Slim\Psr7\Response();
-            $response->getBody()->write(json_encode(['error' => 'Unauthorized']));
-            return $response->withStatus(401)->withHeader('Content-Type', 'application/json');
-        }
-
-        // Autorización por rol
-        if (!in_array($userRole, $this->allowedRoles, true)) {
-            $response = new \Slim\Psr7\Response();
-            $response->getBody()->write(json_encode(['error' => 'Acceso denegado']));
-            return $response->withStatus(403)->withHeader('Content-Type', 'application/json');
-        }
-
-        return $handler->handle($request);
-    }
-}
 
 $app->run();
 

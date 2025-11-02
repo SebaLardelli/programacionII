@@ -142,8 +142,6 @@ $app->put('/ActualizarUsuario/{id_usuario}', function ($request, $response, $arg
                     ->withStatus($resultado ? 200 : 400);
 });
 
-
-
 //DELETE
 $app->delete('/EliminarUsuario/{id_usuario}', function ($request, $response, $args) use ($pdo) {
     $id_usuario = $args['id_usuario'];
@@ -159,7 +157,7 @@ $app->delete('/EliminarUsuario/{id_usuario}', function ($request, $response, $ar
     ));
 
     return $response->withHeader('Content-Type', 'application/json')
-                    ->withStatus($resultado ? 200 : 400);
+                        ->withStatus($resultado ? 200 : 400);
 });
 
 ?>

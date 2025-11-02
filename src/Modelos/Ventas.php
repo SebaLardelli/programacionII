@@ -115,7 +115,6 @@ class Ventas {
         int $id_usuario,
         int $id_carrito,
         string $fecha_venta,
-        int $id_metodo_pago,
         float $importe_total,
         int $id_estado_v,
         int $id_punto_retiro,
@@ -123,15 +122,14 @@ class Ventas {
     ) {
         $stmt = $this->pdo->prepare("
             INSERT INTO ventas
-            (id_usuario, id_carrito, fecha_venta, id_metodo_pago, importe_total, id_estado_v, id_punto_retiro, id_estado_p)
+            (id_usuario, id_carrito, fecha_venta, importe_total, id_estado_v, id_punto_retiro, id_estado_p)
             VALUES
-            (:id_usuario, :id_carrito, :fecha_venta, :id_metodo_pago, :importe_total, :id_estado_v, :id_punto_retiro, :id_estado_p)
+            (:id_usuario, :id_carrito, :fecha_venta, :importe_total, :id_estado_v, :id_punto_retiro, :id_estado_p)
         ");
         return $stmt->execute([
             ':id_usuario' => $id_usuario,
             ':id_carrito' => $id_carrito,
             ':fecha_venta' => $fecha_venta,
-            ':id_metodo_pago' => $id_metodo_pago,
             ':importe_total' => $importe_total,
             ':id_estado_v' => $id_estado_v,
             ':id_punto_retiro' => $id_punto_retiro,
@@ -144,7 +142,6 @@ class Ventas {
         int $id_usuario,
         int $id_carrito,
         string $fecha_venta,
-        int $id_metodo_pago,
         float $importe_total,
         int $id_estado_v,
         int $id_punto_retiro,
@@ -153,7 +150,7 @@ class Ventas {
         $stmt = $this->pdo->prepare("
             UPDATE ventas
             SET id_usuario = :id_usuario, id_carrito = :id_carrito, fecha_venta = :fecha_venta,
-                id_metodo_pago = :id_metodo_pago, importe_total = :importe_total, id_estado_v = :id_estado_v,
+                importe_total = :importe_total, id_estado_v = :id_estado_v,
                 id_punto_retiro = :id_punto_retiro, id_estado_p = :id_estado_p
             WHERE id_venta = :id_venta
         ");
@@ -162,7 +159,6 @@ class Ventas {
             ':id_usuario' => $id_usuario,
             ':id_carrito' => $id_carrito,
             ':fecha_venta' => $fecha_venta,
-            ':id_metodo_pago' => $id_metodo_pago,
             ':importe_total' => $importe_total,
             ':id_estado_v' => $id_estado_v,
             ':id_punto_retiro' => $id_punto_retiro,

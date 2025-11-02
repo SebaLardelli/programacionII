@@ -64,7 +64,7 @@ $app->get('/TraerlocalidadesCP/{codigo_postal}', function (Request $request, Res
 })->add(new RoleMiddleware([1]));
 
 //PUT
-$app->put('/Actualizarlocalidad/{codigo_postal}', function (Request $request, Response $response, $args) use ($pdo) {
+$app->put('/Actualizarlocalidades/{codigo_postal}', function (Request $request, Response $response, $args) use ($pdo) {
     $codigo_postal = $args['codigo_postal'];
     $datos = $request->getParsedBody();
 
@@ -75,34 +75,73 @@ $app->put('/Actualizarlocalidad/{codigo_postal}', function (Request $request, Re
         return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
     }
 
+    // Verificar que la localidad existe antes de actualizar
     $localidades = new Localidades($pdo);
+    $localidadExistente = $localidades->traerLocalidadPorCP($codigo_postal);
+    
+    if (!$localidadExistente) {
+        $response->getBody()->write(json_encode([
+            'error' => 'No se encontró la localidad con ese código postal',
+            'codigo_postal' => $codigo_postal
+        ]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
+    }
+
     $ok = $localidades->actualizarLocalidad(
         $codigo_postal,
         $datos['provincia'],
         $datos['nombre_localidad']
     );
 
-    $response->getBody()->write(json_encode([
-        'mensaje' => $ok ? 'Localidad actualizada correctamente' : 'Error al actualizar la localidad',
-        'codigo_postal' => $codigo_postal,
-        'datos_recibidos' => $datos
-    ]));
-    return $response->withHeader('Content-Type', 'application/json')
-                    ->withStatus($ok ? 200 : 500);
+    if ($ok) {
+        // Obtener los datos actualizados para confirmar
+        $localidadActualizada = $localidades->traerLocalidadPorCP($codigo_postal);
+        $response->getBody()->write(json_encode([
+            'mensaje' => 'Localidad actualizada correctamente',
+            'codigo_postal' => $codigo_postal,
+            'datos_actualizados' => $localidadActualizada
+        ]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+    } else {
+        $response->getBody()->write(json_encode([
+            'error' => 'Error al actualizar la localidad',
+            'codigo_postal' => $codigo_postal
+        ]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+    }
 })->add(new RoleMiddleware([1]));
 
 //DELETE
-$app->delete('/Eliminarlocalidad/{codigo_postal}', function (Request $request, Response $response, $args) use ($pdo) {
+$app->delete('/Eliminarlocalidades/codigo_postal', function (Request $request, Response $response, $args) use ($pdo) {
     $codigo_postal = $args['codigo_postal'];
+    
+    // Verificar que la localidad existe antes de eliminar
     $localidad = new Localidades($pdo);
+    $localidadExistente = $localidad->traerLocalidadPorCP($codigo_postal);
+    
+    if (!$localidadExistente) {
+        $response->getBody()->write(json_encode([
+            'error' => 'No se encontró la localidad con ese código postal',
+            'codigo_postal' => $codigo_postal
+        ]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
+    }
+
     $ok = $localidad->eliminarLocalidad($codigo_postal);
 
-    $response->getBody()->write(json_encode([
-        'mensaje' => $ok ? 'Localidad eliminada correctamente' : 'Error al eliminar la localidad',
-        'codigo_postal' => $codigo_postal
-    ]));
-    return $response->withHeader('Content-Type', 'application/json')
-                    ->withStatus($ok ? 200 : 500);
+    if ($ok) {
+        $response->getBody()->write(json_encode([
+            'mensaje' => 'Localidad eliminada correctamente',
+            'codigo_postal' => $codigo_postal
+        ]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+    } else {
+        $response->getBody()->write(json_encode([
+            'error' => 'Error al eliminar la localidad',
+            'codigo_postal' => $codigo_postal
+        ]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+    }
 })->add(new RoleMiddleware([1]));
 
 ?>

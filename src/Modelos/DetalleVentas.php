@@ -133,7 +133,7 @@ class DetalleVentas {
             WHERE id_fila = :id_fila
         ");
 
-        return $stmt->execute([
+        $stmt->execute([
             ':id_fila' => $id_fila,
             ':id_venta' => $id_venta,
             ':id_carrito' => $id_carrito,
@@ -142,11 +142,13 @@ class DetalleVentas {
             ':id_producto' => $id_producto,
             ':cantidad' => $cantidad
         ]);
+        return $stmt->rowCount() > 0;
     }
 
     public function eliminarDetalleVenta(int $id_fila): bool {
         $stmt = $this->pdo->prepare("DELETE FROM detalle_venta WHERE id_fila = :id_fila");
-        return $stmt->execute([':id_fila' => $id_fila]);
+        $stmt->execute([':id_fila' => $id_fila]);
+        return $stmt->rowCount() > 0;
     }
 
     public function traerDetalleVentas(): array {

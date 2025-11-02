@@ -8,14 +8,13 @@ use App\Modelos\Tematica;
 $app->post('/CrearTematica', function (Request $request, Response $response) use ($pdo) {
     $datos = $request->getParsedBody();
 
-    if (empty($datos['id_categoria']) || empty($datos['nombre_t']) || empty($datos['descripcion_t'])) {
-        $response->getBody()->write(json_encode(['error' => 'Todos los campos son requeridos']));
+    if (empty($datos['nombre_t']) || empty($datos['descripcion_t'])) {
+        $response->getBody()->write(json_encode(['error' => 'Los campos nombre_t y descripcion_t son requeridos']));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
     }
 
     $tematica = new Tematica($pdo);
     $ok = $tematica->crearTematica(
-        $datos['id_categoria'],
         $datos['nombre_t'],
         $datos['descripcion_t']
     );
@@ -65,15 +64,14 @@ $app->put('/ActualizarTematica/{id_tematica}', function (Request $request, Respo
     $id_tematica = $args['id_tematica'];
     $datos = $request->getParsedBody();
 
-    if (empty($datos['id_categoria']) || empty($datos['nombre_t']) || empty($datos['descripcion_t'])) {
-        $response->getBody()->write(json_encode(['error' => 'Todos los campos son requeridos']));
+    if (empty($datos['nombre_t']) || empty($datos['descripcion_t'])) {
+        $response->getBody()->write(json_encode(['error' => 'Los campos nombre_t y descripcion_t son requeridos']));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
     }
 
     $tematica = new Tematica($pdo);
     $ok = $tematica->actualizarTematica(
         $id_tematica,
-        $datos['id_categoria'],
         $datos['nombre_t'],
         $datos['descripcion_t']
     );

@@ -8,7 +8,7 @@ use App\Modelos\Carrito;
 $app->post('/CrearCarrito', function (Request $request, Response $response) use ($pdo) {
     $datos = $request->getParsedBody();
 
-    // Mismo patrón que Usuarios: campos requeridos
+    // campos requeridos
     $camposRequeridos = ['id_usuario', 'importe_total', 'id_estado_car', 'fecha_creacion'];
     foreach ($camposRequeridos as $campo) {
         if (empty($datos[$campo]) && $datos[$campo] !== "0") {
@@ -25,24 +25,17 @@ $app->post('/CrearCarrito', function (Request $request, Response $response) use 
         return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
     }
 
-    // Validar FK: estado carrito
-    $stmt = $pdo->prepare("SELECT 1 FROM estado_carrito WHERE id_estado_car = ?");
-    $stmt->execute([(int)$datos['id_estado_car']]);
-    if (!$stmt->fetchColumn()) {
-        $response->getBody()->write(json_encode(['error' => 'id_estado_car no existe en estado_carrito']));
-        return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
-    }
 
     $ahora = date('Y-m-d H:i:s');
 
     $carrito = new Carrito(
         $pdo,
-        0,
         (int)$datos['id_usuario'],
         $datos['fecha_creacion'],
         $datos['fecha_ultima_actualizacion'] ?? $ahora,
         (float)$datos['importe_total'],
-        (int)$datos['id_estado_car']
+        (int)$datos['id_estado_car'],
+        null
     );
 
     $ok = $carrito->crearCarrito(
@@ -115,15 +108,7 @@ $app->put('/ActualizarCarrito/{id_carrito}', function ($request, $response, $arg
         return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
     }
 
-    // Validar FK estado
-    $stmt = $pdo->prepare("SELECT COUNT(*) FROM estado_carrito WHERE id_estado_car = ?");
-    $stmt->execute([$id_estado_car]);
-    if ($stmt->fetchColumn() == 0) {
-        $response->getBody()->write(json_encode([
-            "error" => "id_estado_car no existe"
-        ]));
-        return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
-    }
+
 
     // Validar FK usuario si llega
     if (isset($data['id_usuario'])) {

@@ -76,16 +76,18 @@ class Localidades {
             SET provincia = :provincia, nombre_localidad = :nombre_localidad
             WHERE codigo_postal = :codigo_postal
         ");
-        return $stmt->execute([
+        $stmt->execute([
             ':codigo_postal' => $codigo_postal,
             ':provincia' => $provincia,
             ':nombre_localidad' => $nombre_localidad
         ]);
+
     }
 
     public function eliminarLocalidad(string $codigo_postal): bool {
         $stmt = $this->pdo->prepare("DELETE FROM localidades WHERE codigo_postal = :codigo_postal");
-        return $stmt->execute([':codigo_postal' => $codigo_postal]);
+        $stmt->execute([':codigo_postal' => $codigo_postal]);
+
     }
 
     public function traerLocalidades(): array {
