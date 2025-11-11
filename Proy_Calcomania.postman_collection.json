@@ -1,0 +1,2344 @@
+{
+	"info": {
+		"_postman_id": "62ca366c-b0cb-4ed0-a15b-e863e6dee99b",
+		"name": "Proy_Calcomania",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45364405",
+		"_collection_link": "https://sebastian-1639370.postman.co/workspace/Sebastian's-Workspace~24d9ef0e-4914-43f1-8338-1855c2b37d01/collection/45364405-62ca366c-b0cb-4ed0-a15b-e863e6dee99b?action=share&source=collection_link&creator=45364405"
+	},
+	"item": [
+		{
+			"name": "Localidad",
+			"item": [
+				{
+					"name": "CrearLocalidad",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.replaceIn('')"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo_postal\": \"2100\",\r\n    \"provincia\": \"Santa Fe\",\r\n    \"nombre_localidad\": \"Casilda\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "192.168.100.14/Crearlocalidad",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"Crearlocalidad"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "randomLocalidad",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"codigo_postal\": \"BF\",\r\n    \"provincia\": \"Freeman Falls\",\r\n    \"nombre_localidad\": \"North Hugh\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/localidad",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"localidad"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sat, 23 Aug 2025 17:53:45 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.62 (Debian)"
+								},
+								{
+									"key": "Content-Length",
+									"value": "145"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"mensaje\": \"Localidad creada correctamente\",\n    \"datos_recibidos\": {\n        \"codigo_postal\": \"BF\",\n        \"provincia\": \"Freeman Falls\",\n        \"nombre_localidad\": \"North Hugh\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "TraerLocalidades",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTY5NDg0NTQsImV4cCI6MTc1Njk1MjA1NCwiZGF0YSI6eyJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjF9fQ.UZhC0TWd3z8fm2u58pzMZ29T__rjMx2T7pfqkSUFyBU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "192.168.100.14/Traerlocalidades",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"Traerlocalidades"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "randomLocalidad",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/localidades",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"localidades"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sat, 23 Aug 2025 18:05:58 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.62 (Debian)"
+								},
+								{
+									"key": "Content-Length",
+									"value": "206"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"mensaje\": \"Listado de localidades\",\n    \"datos\": [\n        {\n            \"codigo_postal\": \"2000\",\n            \"provincia\": \"Santa Fe\",\n            \"nombre_localidad\": \"Rosario\"\n        },\n        {\n            \"codigo_postal\": \"BF\",\n            \"provincia\": \"Freeman Falls\",\n            \"nombre_localidad\": \"North Hugh\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Actualizarlocalidad",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.replaceIn('')"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjE5MzY5NjMsImV4cCI6MTc2MTk0MDU2MywiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.o0sqZazBeNZX3MWMNi8nSDN_-wRo4rZAuRKiRl1XdAM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo_postal\": \"2000\",\r\n    \"provincia\": \"Santa Fe\",\r\n    \"nombre_localidad\": \"Villa Mugueta\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "192.168.100.14/Actualizarlocalidades/2000",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"Actualizarlocalidades",
+								"2000"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "randomLocalidad Copy",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"provincia\": \"Santa Fe\",\r\n    \"nombre_localidad\": \"Rosario\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/localidades/2000",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"localidades",
+										"2000"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sat, 23 Aug 2025 20:05:16 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.62 (Debian)"
+								},
+								{
+									"key": "Content-Length",
+									"value": "144"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"mensaje\": \"Localidad actualizada correctamente\",\n    \"codigo_postal\": \"2000\",\n    \"datos_recibidos\": {\n        \"provincia\": \"Santa Fe\",\n        \"nombre_localidad\": \"Rosario\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Eliminarlocalidad",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.replaceIn('')"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo_postal\": \"2000\",\r\n    \"provincia\": \"Santa Fe\",\r\n    \"nombre_localidad\": \"Villa Mugueta\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "192.168.100.14/Eliminarlocalidades{2000}",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"Eliminarlocalidades{2000}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "TraerUsuarios",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.replaceIn('')"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTcwMTk3MTYsImV4cCI6MTc1NzAyMzMxNiwiZGF0YSI6eyJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjF9fQ.xlONTR7DeugIXKmZIVoe6POncKZ0QFbo8BUsm9T1NP8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic dXNlcjpwYXNzd29yZA==",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "172.16.202.234/TraerUsuarios",
+							"host": [
+								"172",
+								"16",
+								"202",
+								"234"
+							],
+							"path": [
+								"TraerUsuarios"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "randomUsuario",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombre_usuario\": \"Juan\",\r\n  \"apellido\": \"Pérez\",\r\n  \"email\": \"juan@example.com\",\r\n  \"contrasena_hash\": \"abc123\",\r\n  \"direccion\": \"Calle Falsa 123\",\r\n  \"telefono\": \"555-1234\",\r\n  \"codigo_postal\": \"2000\",\r\n  \"cuenta_verificada\": true,\r\n  \"fecha_registro\": \"2023-11-15 14:30:00\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/usuarios",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"usuarios"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 24 Aug 2025 00:16:41 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.62 (Debian)"
+								},
+								{
+									"key": "Content-Length",
+									"value": "300"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"mensaje\": \"Listado de usuarios\",\n    \"datos\": [\n        {\n            \"id_usuario\": 1,\n            \"nombre_usuario\": \"Juan\",\n            \"apellido\": \"Pérez\",\n            \"email\": \"juan@example.com\",\n            \"contrasena_hash\": \"abc123\",\n            \"telefono\": \"555-1234\",\n            \"direccion\": \"Calle Falsa 123\",\n            \"codigo_postal\": \"2000\",\n            \"cuenta_verificada\": \"1\",\n            \"fecha_registro\": \"2023-11-15 14:30:00\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "CrearUsuario",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.replaceIn('')"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjE5MjM5ODEsImV4cCI6MTc2MTkyNzU4MSwiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.r-R33f5ya6mt2qGAsauE9R_yJijXDauYKq-Ahj2ZBS8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre_usuario\": \"Sebastian\",\r\n  \"apellido\": \"Lardelli\",\r\n  \"email\": \"sebalardelli@gmail.com\",\r\n  \"contrasena_hash\": \"Seba123\",\r\n  \"direccion\": \"Calle Falsa 123\",\r\n  \"telefono\": \"3415560281\",\r\n  \"codigo_postal\": \"2000\",\r\n  \"cuenta_verificada\": true,\r\n  \"fecha_registro\": \"2023-11-15 14:30:00\",\r\n   \"id_rol\": 10\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "192.168.100.14/Crearusuario",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"Crearusuario"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "randomUsuario",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombre_usuario\": \"Juan\",\r\n  \"apellido\": \"Pérez\",\r\n  \"email\": \"juan@example.com\",\r\n  \"contrasena_hash\": \"abc123\",\r\n  \"direccion\": \"Calle Falsa 123\",\r\n  \"telefono\": \"555-1234\",\r\n  \"codigo_postal\": \"2000\",\r\n  \"cuenta_verificada\": true,\r\n  \"fecha_registro\": \"2023-11-15 14:30:00\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/usuarios",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"usuarios"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 24 Aug 2025 00:15:44 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.62 (Debian)"
+								},
+								{
+									"key": "Content-Length",
+									"value": "302"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"mensaje\": \"Usuario creado exitosamente\",\n    \"datos_recibidos\": {\n        \"nombre_usuario\": \"Juan\",\n        \"apellido\": \"Pérez\",\n        \"email\": \"juan@example.com\",\n        \"contrasena_hash\": \"abc123\",\n        \"direccion\": \"Calle Falsa 123\",\n        \"telefono\": \"555-1234\",\n        \"codigo_postal\": \"2000\",\n        \"cuenta_verificada\": true,\n        \"fecha_registro\": \"2023-11-15 14:30:00\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "ActualizarUsuario",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.replaceIn('')"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "jwt",
+							"jwt": [
+								{
+									"key": "algorithm",
+									"value": "HS256",
+									"type": "string"
+								},
+								{
+									"key": "isSecretBase64Encoded",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "payload",
+									"value": "{}",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "queryParamKey",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "header",
+									"value": "{}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre_usuario\": \"Juan\",\r\n  \"apellido\": \"Pérez\",\r\n  \"email\": \"juan@example.com\",\r\n  \"contrasena_hash\": \"abc123\",\r\n  \"direccion\": \"Calle Falsa 20\",\r\n  \"telefono\": \"555-1234\",\r\n  \"codigo_postal\": \"2000\",\r\n  \"cuenta_verificada\": true,\r\n  \"fecha_registro\": \"2023-11-15 14:30:00\",\r\n  \"id_rol\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "192.168.100.14/Actualizarusuario/1",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"Actualizarusuario",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "randomUsuario",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombre_usuario\": \"Juan\",\r\n  \"apellido\": \"Pérez\",\r\n  \"email\": \"juan@example.com\",\r\n  \"contrasena_hash\": \"abc123\",\r\n  \"direccion\": \"Calle Falsa 20\",\r\n  \"telefono\": \"555-1234\",\r\n  \"codigo_postal\": \"2000\",\r\n  \"cuenta_verificada\": true,\r\n  \"fecha_registro\": \"2023-11-15 14:30:00\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/usuarios/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"usuarios",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 24 Aug 2025 00:46:49 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.62 (Debian)"
+								},
+								{
+									"key": "Content-Length",
+									"value": "47"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"mensaje\": \"Usuario actualizado correctamente\"\n}"
+						}
+					]
+				},
+				{
+					"name": "EliminarUsuario",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.replaceIn('')"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTg0MTU0ODUsImV4cCI6MTc1ODQxOTA4NSwiZGF0YSI6eyJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjF9fQ.pW45nwfKSi5dvIxZkStLX_cVXz0hVS-Sd5kx11Yz5x8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre_usuario\": \"Juan\",\r\n  \"apellido\": \"Pérez\",\r\n  \"email\": \"juan@example.com\",\r\n  \"contrasena_hash\": \"abc123\",\r\n  \"direccion\": \"Calle Falsa 20\",\r\n  \"telefono\": \"555-1234\",\r\n  \"codigo_postal\": \"2000\",\r\n  \"cuenta_verificada\": true,\r\n  \"fecha_registro\": \"2023-11-15 14:30:00\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "192.168.100.14/Eliminarusuario/7",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"Eliminarusuario",
+								"7"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "randomUsuario",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombre_usuario\": \"Juan\",\r\n  \"apellido\": \"Pérez\",\r\n  \"email\": \"juan@example.com\",\r\n  \"contrasena_hash\": \"abc123\",\r\n  \"direccion\": \"Calle Falsa 20\",\r\n  \"telefono\": \"555-1234\",\r\n  \"codigo_postal\": \"2000\",\r\n  \"cuenta_verificada\": true,\r\n  \"fecha_registro\": \"2023-11-15 14:30:00\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/usuarios/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"usuarios",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 24 Aug 2025 00:48:20 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.62 (Debian)"
+								},
+								{
+									"key": "Content-Length",
+									"value": "45"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"mensaje\": \"Usuario eliminado correctamente\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "loginBasic",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "sebalardelli@gmail.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "Seba123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic dXNlcjpwYXNzd29yZA==",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "172.16.202.234/api/protected",
+							"host": [
+								"172",
+								"16",
+								"202",
+								"234"
+							],
+							"path": [
+								"api",
+								"protected"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Login",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Basic dXNlcjpwYXNzd29yZA==",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/api/protected",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"protected"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 29 Aug 2025 00:25:39 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.62 (Debian)"
+								},
+								{
+									"key": "Content-Length",
+									"value": "50"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"usuario\": \"sebalardelli@gmail.com\",\n    \"rol\": \"admin\"\n}"
+						}
+					]
+				},
+				{
+					"name": "loginJWT",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Seba123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "sebalardelli@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "192.168.100.14/login",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tematica",
+			"item": [
+				{
+					"name": "TraerTematicas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTcwMTA5MzMsImV4cCI6MTc1NzAxNDUzMywiZGF0YSI6eyJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjF9fQ.hHu4nA-fITAXny1F-C6GU4GIGP8fcwu9n9mSsPyMvjY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic dXNlcjpwYXNzd29yZA==",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "192.168.100.14/TraerTematicas",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"TraerTematicas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CrearTematica",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTcwMTA5MzMsImV4cCI6MTc1NzAxNDUzMywiZGF0YSI6eyJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjF9fQ.hHu4nA-fITAXny1F-C6GU4GIGP8fcwu9n9mSsPyMvjY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id_categoria\": 2,\r\n  \"nombre_t\": \"Lisa\",\r\n  \"descripcion_t\": \"Lisa con gorra.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "192.168.100.14/CrearTematica",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"CrearTematica"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ActualizarTematica",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjE5NDYzOTcsImV4cCI6MTc2MTk0OTk5NywiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.U9ediSgzSxj21czmIWMy1EuuqM7pYTNGVIQ_TZ73iaM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre_t\": \"Mar\",\r\n  \"descripcion_t\": \"Ballena.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "192.168.100.14/ActualizarTematica/{6}",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"ActualizarTematica",
+								"{6}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EliminarTematica",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTcwMTA5MzMsImV4cCI6MTc1NzAxNDUzMywiZGF0YSI6eyJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjF9fQ.hHu4nA-fITAXny1F-C6GU4GIGP8fcwu9n9mSsPyMvjY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "192.168.100.14/EliminarTematica/1",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"EliminarTematica",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categoria",
+			"item": [
+				{
+					"name": "TraerCategorias",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjE5NDYzOTcsImV4cCI6MTc2MTk0OTk5NywiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.U9ediSgzSxj21czmIWMy1EuuqM7pYTNGVIQ_TZ73iaM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic dXNlcjpwYXNzd29yZA==",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "192.168.100.14/TraerCategorias",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"TraerCategorias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CrearCategoria",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjE5NDYzOTcsImV4cCI6MTc2MTk0OTk5NywiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.U9ediSgzSxj21czmIWMy1EuuqM7pYTNGVIQ_TZ73iaM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre_c\": \"Simpson\",\r\n  \"descripcion_c\": \"Calcomanias referida a los simpsons.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "192.168.100.14/CrearCategoria",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"CrearCategoria"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ActualizarCategoria",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjE5NDYzOTcsImV4cCI6MTc2MTk0OTk5NywiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.U9ediSgzSxj21czmIWMy1EuuqM7pYTNGVIQ_TZ73iaM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre_c\": \"Simpson\",\r\n  \"descripcion_c\": \"Calcomanias referida a los simpsons.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "192.168.100.14/ActualizarCategoria/7",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"ActualizarCategoria",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EliminarCategoria",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjE5NDYzOTcsImV4cCI6MTc2MTk0OTk5NywiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.U9ediSgzSxj21czmIWMy1EuuqM7pYTNGVIQ_TZ73iaM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "192.168.100.14/EliminarCategoria/7",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"EliminarCategoria",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MetodoPago",
+			"item": [
+				{
+					"name": "CrearMetodoPago",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjE5NDYzOTcsImV4cCI6MTc2MTk0OTk5NywiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.U9ediSgzSxj21czmIWMy1EuuqM7pYTNGVIQ_TZ73iaM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"descripcion_mp\": \"Tarjeta\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/CrearMetodoPago",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"CrearMetodoPago"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TraerMetodosPago",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjE5NDYzOTcsImV4cCI6MTc2MTk0OTk5NywiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.U9ediSgzSxj21czmIWMy1EuuqM7pYTNGVIQ_TZ73iaM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "192.168.100.14/TraerMetodosPago",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"TraerMetodosPago"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ActualizarMetodoPago",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjE5NDYzOTcsImV4cCI6MTc2MTk0OTk5NywiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.U9ediSgzSxj21czmIWMy1EuuqM7pYTNGVIQ_TZ73iaM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"descripcion_mp\": \"Tarjeta Debito\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "192.168.100.14/ActualizarMetodoPago/3",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"ActualizarMetodoPago",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EliminarMetodoPago",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjE5NDYzOTcsImV4cCI6MTc2MTk0OTk5NywiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.U9ediSgzSxj21czmIWMy1EuuqM7pYTNGVIQ_TZ73iaM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "192.168.100.14/EliminarMetodoPago/3",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"EliminarMetodoPago",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Productos",
+			"item": [
+				{
+					"name": "TraerProductos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjE5NDYzOTcsImV4cCI6MTc2MTk0OTk5NywiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.U9ediSgzSxj21czmIWMy1EuuqM7pYTNGVIQ_TZ73iaM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "192.168.100.14/TraerProductos",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"TraerProductos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CrearProducto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjE5NjA2ODEsImV4cCI6MTc2MTk2NDI4MSwiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.XdljbTn4Aw7g2Sl3-92rd9P5Cd65YH0YKK191cpduvQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre_p\": \"Calco - LisaGG 02\",\r\n  \"descripcion_p\": \"Calcomanía de lisa presidente.\",\r\n  \"precio\": 850,\r\n  \"stock\": 12,\r\n  \"id_estado_p\": 1,\r\n  \"tamanio\": \"8 cm\",\r\n  \"id_categoria\": 2,\r\n  \"imagen_url\": \"https://midominio.com/images/calcomania-neon-gamer.png\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "192.168.100.14/CrearProducto",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"CrearProducto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ActualizarProducto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjE5NjA2ODEsImV4cCI6MTc2MTk2NDI4MSwiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.XdljbTn4Aw7g2Sl3-92rd9P5Cd65YH0YKK191cpduvQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre_p\": \"Calco - Lisa 02\",\r\n  \"descripcion_p\": \"Calcomanía de lisa presidente..\",\r\n  \"precio\": 900,\r\n  \"stock\": 12,\r\n  \"id_estado_p\": 1,\r\n  \"tamanio\": \"8 cm\",\r\n  \"id_categoria\": 2,\r\n  \"imagen_url\": \"https://midominio.com/images/calcomania-neon-gamer.png\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "192.168.100.14/ActualizarProducto/6",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"ActualizarProducto",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EliminarProducto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjE5NjA2ODEsImV4cCI6MTc2MTk2NDI4MSwiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.XdljbTn4Aw7g2Sl3-92rd9P5Cd65YH0YKK191cpduvQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "192.168.100.14/EliminarProducto/6",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"EliminarProducto",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PuntoRetiro",
+			"item": [
+				{
+					"name": "TraerPuntosRetiro",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjE5NjA2ODEsImV4cCI6MTc2MTk2NDI4MSwiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.XdljbTn4Aw7g2Sl3-92rd9P5Cd65YH0YKK191cpduvQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "192.168.100.14/TraerPuntoRetiro",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"TraerPuntoRetiro"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CrearPuntoRetiro",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjE5NjA2ODEsImV4cCI6MTc2MTk2NDI4MSwiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.XdljbTn4Aw7g2Sl3-92rd9P5Cd65YH0YKK191cpduvQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"direccion\": \"Mitre 123\",\r\n  \"horarios\": \"2025-09-04 20:30:00\",\r\n  \"codigo_postal\": \"2000\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "192.168.100.14/CrearPuntoRetiro",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"CrearPuntoRetiro"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ActualizarPuntoRetiro",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTcwMTg2MzYsImV4cCI6MTc1NzAyMjIzNiwiZGF0YSI6eyJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjF9fQ.VuqZpI5Lp81EYUGol9OjTw8H70r-KB3AwdTRbwrCGi4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"direccion\": \"Mitre 123\",\r\n  \"horarios\": \"2025-08-04 20:30:00\",\r\n  \"codigo_postal\": \"2000\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "192.168.100.14/ActualizarPuntoRetiro/1",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"ActualizarPuntoRetiro",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EliminarPuntoRetiro",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTcwMTg2MzYsImV4cCI6MTc1NzAyMjIzNiwiZGF0YSI6eyJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjF9fQ.VuqZpI5Lp81EYUGol9OjTw8H70r-KB3AwdTRbwrCGi4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/EliminarMetodoPago/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"EliminarMetodoPago",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Venta",
+			"item": [
+				{
+					"name": "TraerVentas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjIwNDM4NzQsImV4cCI6MTc2MjA0NzQ3NCwiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.j4Z0E-3ZdDOO_dreQ_xCRVaw6rwAHDYdnVW3r8idK7U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "192.168.100.14/TraerVentas",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"TraerVentas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CrearVenta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjIwNDM4NzQsImV4cCI6MTc2MjA0NzQ3NCwiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.j4Z0E-3ZdDOO_dreQ_xCRVaw6rwAHDYdnVW3r8idK7U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id_usuario\": 5,\r\n        \"id_carrito\": 1,\r\n        \"fecha_venta\": \"2025-10-06 10:57:05\",\r\n        \"importe_total\": \"50000\",\r\n        \"id_estado_v\": 1,\r\n        \"id_punto_retiro\": 1,\r\n        \"id_estado_p\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "192.168.100.14/CrearVenta",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"CrearVenta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ActualizarVenta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjIwNDM4NzQsImV4cCI6MTc2MjA0NzQ3NCwiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.j4Z0E-3ZdDOO_dreQ_xCRVaw6rwAHDYdnVW3r8idK7U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id_usuario\": 5,\r\n        \"id_carrito\": 1,\r\n        \"fecha_venta\": \"2025-10-06 10:57:05\",\r\n        \"importe_total\": \"60000\",\r\n        \"id_estado_v\": 1,\r\n        \"id_punto_retiro\": 1,\r\n        \"id_estado_p\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "192.168.100.14/ActualizarVenta/51",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"ActualizarVenta",
+								"51"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EliminarVenta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjIwNDM4NzQsImV4cCI6MTc2MjA0NzQ3NCwiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.j4Z0E-3ZdDOO_dreQ_xCRVaw6rwAHDYdnVW3r8idK7U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "192.168.100.14/EliminarVenta/51",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"EliminarVenta",
+								"51"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DetalleVenta",
+			"item": [
+				{
+					"name": "TraerDetalleVentas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjIwNDM4NzQsImV4cCI6MTc2MjA0NzQ3NCwiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.j4Z0E-3ZdDOO_dreQ_xCRVaw6rwAHDYdnVW3r8idK7U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "192.168.100.14/TraerDetalleVentas",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"TraerDetalleVentas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CrearDetalleVenta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTcwMjk3NTgsImV4cCI6MTc1NzAzMzM1OCwiZGF0YSI6eyJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjF9fQ.rR_SDXzft95629oOP4p7TPRt9yi3it4F9m7X-brapxs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"id_fila\": 49,\r\n            \"id_venta\": 49,\r\n            \"id_carrito\": 38,\r\n            \"precio_unitario\": \"450.00\",\r\n            \"importe_total_detalle\": \"450.00\",\r\n            \"id_producto\": 3,\r\n            \"cantidad\": 1,\r\n            \"tamano\": \"5cm\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "192.168.100.14/CrearDetalleVenta/",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"CrearDetalleVenta",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ActualizarDetalleVenta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTcwMjk3NTgsImV4cCI6MTc1NzAzMzM1OCwiZGF0YSI6eyJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjF9fQ.rR_SDXzft95629oOP4p7TPRt9yi3it4F9m7X-brapxs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id_venta\": 1,\r\n  \"id_carrito\": 1,\r\n  \"precio_unitario\": 520.00,\r\n  \"importe_total_detalle\": 1040.00,\r\n  \"id_producto\": 1,\r\n  \"cantidad\": 2\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "192.168.100.14/ActualizarDetalleVenta/1",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"ActualizarDetalleVenta",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EliminarDetalleVenta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTcwMjk3NTgsImV4cCI6MTc1NzAzMzM1OCwiZGF0YSI6eyJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjF9fQ.rR_SDXzft95629oOP4p7TPRt9yi3it4F9m7X-brapxs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "192.168.100.14/EliminarDetalleVenta/1",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"EliminarDetalleVenta",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Carrito",
+			"item": [
+				{
+					"name": "TraerCarritos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjIwNDM4NzQsImV4cCI6MTc2MjA0NzQ3NCwiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.j4Z0E-3ZdDOO_dreQ_xCRVaw6rwAHDYdnVW3r8idK7U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "192.168.100.14/TraerCarritos",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"TraerCarritos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CrearCarrito",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjIwNDM4NzQsImV4cCI6MTc2MjA0NzQ3NCwiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.j4Z0E-3ZdDOO_dreQ_xCRVaw6rwAHDYdnVW3r8idK7U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id_usuario\": 16,\r\n  \"fecha_creacion\": \"2025-10-06 16:00:00\",\r\n  \"fecha_ultima_actualizacion\": \"2025-10-06 16:00:00\",\r\n  \"importe_total\": \"3950.00\",\r\n  \"id_estado_car\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "192.168.100.14/CrearCarrito",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"CrearCarrito"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ActualizarCarrito",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjIwNDM4NzQsImV4cCI6MTc2MjA0NzQ3NCwiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.j4Z0E-3ZdDOO_dreQ_xCRVaw6rwAHDYdnVW3r8idK7U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id_usuario\": 16,\r\n  \"fecha_creacion\": \"2025-10-06 16:00:00\",\r\n  \"fecha_ultima_actualizacion\": \"2025-10-06 16:00:00\",\r\n  \"importe_total\": \"3800.00\",\r\n  \"id_estado_car\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "192.168.100.14/ActualizarCarrito/40",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"ActualizarCarrito",
+								"40"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EliminarCarrito",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjIwNDM4NzQsImV4cCI6MTc2MjA0NzQ3NCwiZGF0YSI6eyJpZF91c3VhcmlvIjo1LCJlbWFpbCI6InNlYmFsYXJkZWxsaUBnbWFpbC5jb20iLCJpZF9yb2wiOjEsIm5vbWJyZSI6IlNlYmFzdGlhbiIsImFwZWxsaWRvIjoiTGFyZGVsbGkifX0.j4Z0E-3ZdDOO_dreQ_xCRVaw6rwAHDYdnVW3r8idK7U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "192.168.100.14/EliminarCarrito/40",
+							"host": [
+								"192",
+								"168",
+								"100",
+								"14"
+							],
+							"path": [
+								"EliminarCarrito",
+								"40"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "contraseña",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
